@@ -37,7 +37,7 @@ Karan
 Harita
 !! Pyraminx shuffling algorithm -- DONE
 !!! Knowledge of BFS/BST/AVL
-!!! Algorithm to solve tips of Pyraminx
+!!! Algorithm to solve tips of Pyraminx -- DONE
 !! Designing Working Menu Bar
 !! Interface for Mode 3 (cube solver)
 
