@@ -20,7 +20,7 @@ Kalpesh
 !!! Setup of OpenGL -- DONE
 !!! Color data collection -- DONE
 ! Setup for transportation via IITB-Wireless
-!!! Finalization of Color functions (Normal/Vector/HSV approach)
+!!! Finalization of Color functions (Normal/Vector/HSV approach) -- DONE
 !! Decision of file organization of final project
 ! App Design implementation
 
@@ -28,8 +28,8 @@ Karan
 !!! Knowledge of BFS/BST/AVL -- DONE
 !!! Implementation of BFS algorithm -- DONE
 !!! Implementation of BST/AVL data structures -- DONE
-!!! Graph back-tracking algorithm to generate final output
-! File handling to receive data (??)
+!!! Graph back-tracking algorithm to generate final output -- DONE
+! File handling to receive data (??) -- DONE
 !!! Drawing 3D tetrahedron with stickers in OpenGL
 !! Camera-Mouse handling in OpenGL
 ! File handling for generation of sorted solution file (Only if BST-AVL is not fast enough)
