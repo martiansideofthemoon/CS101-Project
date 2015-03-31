@@ -1,0 +1,49 @@
+WORK DIVISION
+
+!!!-Before Prototype
+!!-Before Final Submission
+!-Optional
+
+Common
+!!! SRS -- DONE
+!! Decide the exact design of GUI of app/computer application
+!! Integration of project
+!!! Debug all codes to perfection
+!! Video of working
+!! Documentation
+
+Kalpesh
+!!! Knowledge of BFS/BST/AVL -- DONE
+!!! Java program to carry out basic image processing -- DONE
+!!! Basic app with camera integration carrying out image processing -- DONE
+!!! Setup of Sockets to receive data from mobile -- DONE
+!!! Setup of OpenGL -- DONE
+!!! Color data collection -- DONE
+! Setup for transportation via IITB-Wireless
+!!! Finalization of Color functions (Normal/Vector/HSV approach)
+!! Decision of file organization of final project
+! App Design implementation
+
+Karan
+!!! Knowledge of BFS/BST/AVL -- DONE
+!!! Implementation of BFS algorithm -- DONE
+!!! Implementation of BST/AVL data structures -- DONE
+!!! Graph back-tracking algorithm to generate final output
+! File handling to receive data (??)
+!!! Drawing 3D tetrahedron with stickers in OpenGL
+!! Camera-Mouse handling in OpenGL
+! File handling for generation of sorted solution file (Only if BST-AVL is not fast enough)
+
+Harita
+!! Pyraminx shuffling algorithm -- DONE
+!!! Knowledge of BFS/BST/AVL
+!!! Algorithm to solve tips of Pyraminx
+!! Designing Working Menu Bar
+!! Interface for Mode 3 (cube solver)
+
+Roshan
+!!! Knowledge of BFS/BST/AVL
+!!! Algorithm to determine fourth side of Pyraminx from matrix -- CANCELLED
+!!! Interface for Mode 1 (Displaying image processed solution)
+!! Interface for Mode 2 (Algorithm finder)
+!! Interface for Mode 3 analysis
