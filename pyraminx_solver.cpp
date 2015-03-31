@@ -552,6 +552,63 @@ int main(){
     	infile.get(c);
     }
 	cout << "Input received, finding shortest solution.." << endl;
+	string tips="";
+	if (arr1[0][2]!=arr1[0][0])
+	{
+		if (arr1[0][2]==arr1[1][0])
+		{
+			tips=tips+"u ";
+
+		}
+		else
+			tips=tips+"u' ";
+	}
+	if (arr1[0][5]!=arr1[0][4])
+	{
+		if (arr1[2][8]==arr1[0][5])
+		{
+			tips=tips+"l ";
+		}
+		else
+			tips=tips+"l' ";
+	}
+	if (arr1[0][7]!=arr1[0][8])
+	{
+		if (arr1[0][7]==arr1[1][4])
+		{
+			tips=tips+"r' ";
+		}
+		else
+			tips=tips+"r ";
+	}
+	if (arr1[1][7]!=arr1[1][8])
+	{
+		if (arr1[1][7]==arr1[2][4])
+		{
+			tips=tips+"b' ";
+		}
+		else
+			tips=tips+"b ";
+	}
+	arr1[0][0]=arr1[0][2];
+	arr1[0][4]=arr1[0][5];
+	arr1[0][8]=arr1[0][7];
+	arr1[1][0]=arr1[1][2];
+	arr1[1][4]=arr1[1][5];
+	arr1[1][8]=arr1[1][7];
+	arr1[2][0]=arr1[2][2];
+	arr1[2][4]=arr1[2][5];
+	arr1[2][8]=arr1[2][7];
+	arr1[3][0]=arr1[3][2];
+	arr1[3][4]=arr1[3][5];
+	arr1[3][8]=arr1[3][7];
+	/*for (int i=0;i<4;i++)
+	{
+		for (int j=0;j<9;j++)
+			cout << arr1[i][j] << " ";
+		cout << endl;
+	}*/
+	cout << tips;
 	bfs(arr1);
 	cout<<"khatam" << endl;
 }
