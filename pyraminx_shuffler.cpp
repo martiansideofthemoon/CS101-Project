@@ -15,6 +15,7 @@ int sticker_colors[4][9]= {{0,0,0,0,0,0,0,0,0},
                            {2,2,2,2,2,2,2,2,2},
                            {3,3,3,3,3,3,3,3,3}};
 string moves[16]={"U ", "U' ", "L ", "L' ","R ", "R' ", "B ","B' ","u ","u' ","l ","l' ","r ","r' ","b ","b' "};
+string move_sequence="";
 int colorid=0;
 int *disp;
 int x_origin=500;
@@ -34,6 +35,7 @@ void draw_pyraminx_sticker(double, double, int, int, int);
 void draw_pyraminx_face(int type,int face);
 void shuffle();
 void output_move_sequence();
+void move_execute(int moveid);
 int main(int argc, char **argv){
    shuffle();
    ALLEGRO_DISPLAY *display = NULL;
@@ -106,14 +108,16 @@ int main(int argc, char **argv){
          y_origin+=3*length*sqrt(3)*scale_coordinate_to_pixel;
          draw_pyraminx_face(-1,3);  
          y_origin+=length*scale_coordinate_to_pixel;
+         al_init_ttf_addon(); 
          ALLEGRO_FONT *font = al_load_ttf_font("Ubuntu-B.ttf",32,0 );
          string move_sequence="";
          for (int i=0;i<15;i++)
          {
             move_sequence+=moves[disp[i]];
          }
-         al_draw_text(font,al_map_rgb(255,255,255),(double)screen_Width/2,y_origin, ALLEGRO_ALIGN_CENTRE,&move_sequence[0]);
+         al_draw_textf(font,al_map_rgb(255,255,255),(double)screen_Width/2,y_origin, ALLEGRO_ALIGN_CENTRE,"%s",&move_sequence[0]);
          al_flip_display();
+         al_shutdown_ttf_addon();
 
       }
       output_move_sequence();
@@ -179,6 +183,7 @@ void shuffle()
             sticker_colors[a][b]=adj[disp[i]][a][b];
       }
    }
+   //move_execute(12);
 }
 void draw_pyraminx_sticker(double x,double y,int colorid,int type,int facetype)
 {
@@ -225,8 +230,28 @@ void draw_pyraminx_sticker(double x,double y,int colorid,int type,int facetype)
 }
 void output_move_sequence()
 {
+   //move_execute(16);
    ofstream ofile("Analysis.txt");
    for (int i=0;i<15;i++)
       ofile << disp[i] << " ";
+   ofile << "\n" << move_sequence;
    ofile.close();
+}
+void move_execute(int moveid)
+{
+      int adj[16][4][9];
+      adjacency(sticker_colors,adj);
+      for (int a=0;a<4;a++)
+      {
+         for (int b=0;b<9;b++)
+            sticker_colors[a][b]=adj[moveid][a][b];
+      }
+      if (moveid>=10)
+      {
+      move_sequence+=(char)((moveid/10)+48);
+      move_sequence+=(char)((moveid%10)+48);
+      }
+      else
+      move_sequence+=((char)moveid+48);
+      move_sequence+=" ";
 }
