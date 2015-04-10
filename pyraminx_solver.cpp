@@ -506,19 +506,6 @@ int main(){
 		checked[i].left_child=&null;
 		checked[i].right_child=&null;
 	}
-	/*for(int i=0;i<4;i++)
-	{
-		for(int j=0;j<9;j++)
-		{
-			cin>>arr1[i][j];
-		}
-	}*/
-	//fill_array();
-
-	/*ofstream outfile;
-   outfile.open("test.txt");
-   outfile << "" ;
-   outfile.close();*/
    
 	int number_characters=0;
 	while (number_characters<40)

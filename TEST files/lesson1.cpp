@@ -1,6 +1,6 @@
 #include "allegro5/allegro.h"
 #include <allegro5/allegro_primitives.h>
-int colors[3][3]={{255,0,0},{0,255,0},{0,0,255}};
+int colors[3][3]={{0,0,255},{255,0,0},{0,255,0},{255,255,0}};
 int colorid=0;
 int main(int argc, char **argv){
  
