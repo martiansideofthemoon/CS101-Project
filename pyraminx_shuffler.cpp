@@ -34,7 +34,7 @@ double relative_coordinates_lower[3][2]={{0,2},{1,3},{-1,3}};
 double offset=0.08;
 double length=1;
 
-const float FPS = 60;
+const float FPS = 10;
 bool flag=true;
 void draw_pyraminx_sticker(double, double, int, int, int);
 void draw_pyraminx_face(int type,int face);
