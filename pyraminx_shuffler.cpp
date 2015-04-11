@@ -18,8 +18,14 @@ string moves[16]={"U ", "U' ", "L ", "L' ","R ", "R' ", "B ","B' ","u ","u' ","l
 string move_sequence="";
 int colorid=0;
 int *disp;
+const int screen_Width=1000;
+const int screen_Height=1000;
+int centre[16][2]={{100,550},{200,550},{300,550},{400,550},{500,550},{600,550},{700,550},{800,550},
+                  {100,600},{200,600},{300,600},{400,600},{500,600},{600,600},{700,600},{800,600}};
 int x_origin=500;
+int radius=15;
 int start_x_origin=500;
+int num_buttons=16;
 int y_origin=0;
 int start_y_origin=0;
 int scale_coordinate_to_pixel=100;
@@ -27,16 +33,18 @@ double relative_coordinates_upper[6][2]={{0,0},{1,1},{-1,1},{2,2},{0,2},{-2,2}};
 double relative_coordinates_lower[3][2]={{0,2},{1,3},{-1,3}};
 double offset=0.08;
 double length=1;
-const int screen_Width=1000;
-const int screen_Height=1000;
+
 const float FPS = 60;
 bool flag=true;
 void draw_pyraminx_sticker(double, double, int, int, int);
 void draw_pyraminx_face(int type,int face);
 void shuffle();
 void output_move_sequence();
+void draw_buttons();
+void draw_button_labels();
 void move_execute(int moveid);
 int main(int argc, char **argv){
+   
    shuffle();
    ALLEGRO_DISPLAY *display = NULL;
    ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -62,6 +70,7 @@ int main(int argc, char **argv){
    }
    al_init_font_addon();
    al_init_ttf_addon(); 
+   al_install_mouse();
    event_queue = al_create_event_queue();
    if(!event_queue) {
       fprintf(stderr, "failed to create event_queue!\n");
@@ -71,8 +80,9 @@ int main(int argc, char **argv){
    }
  
    al_register_event_source(event_queue, al_get_display_event_source(display));
- 
+   
    al_register_event_source(event_queue, al_get_timer_event_source(timer));
+   al_register_event_source(event_queue, al_get_mouse_event_source());
  
    al_clear_to_color(al_map_rgb(0,0,0));
  
@@ -92,13 +102,27 @@ int main(int argc, char **argv){
       else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
          break;
       }
- 
+      else if (ev.type==ALLEGRO_EVENT_MOUSE_BUTTON_UP)
+      {
+         int mouse_x=ev.mouse.x;
+         int mouse_y=ev.mouse.y;
+         for (int i=0;i<num_buttons;i++)
+         {
+            if (sqrt((mouse_x-centre[i][0])*(mouse_x-centre[i][0])+(mouse_y-centre[i][1])*(mouse_y-centre[i][1]))<radius)
+            {
+               move_execute(i);
+               break;
+            }
+         }
+            //move_execute(0);
+      }
       if(redraw && al_is_event_queue_empty(event_queue)) {
          redraw = false;
          x_origin=start_x_origin;
          y_origin=start_y_origin;
          al_clear_to_color(al_map_rgb(0,0,0));
-         
+         draw_buttons();
+         draw_button_labels();
          draw_pyraminx_face(1,0);
          x_origin+=length*3*scale_coordinate_to_pixel;
          draw_pyraminx_face(1,1);
@@ -110,12 +134,12 @@ int main(int argc, char **argv){
          y_origin+=length*scale_coordinate_to_pixel;
          al_init_ttf_addon(); 
          ALLEGRO_FONT *font = al_load_ttf_font("Ubuntu-B.ttf",32,0 );
-         string move_sequence="";
+         string shuffle_move_sequence="";
          for (int i=0;i<15;i++)
          {
-            move_sequence+=moves[disp[i]];
+            shuffle_move_sequence+=moves[disp[i]];
          }
-         al_draw_textf(font,al_map_rgb(255,255,255),(double)screen_Width/2,y_origin, ALLEGRO_ALIGN_CENTRE,"%s",&move_sequence[0]);
+         al_draw_textf(font,al_map_rgb(255,255,255),(double)screen_Width/2,y_origin, ALLEGRO_ALIGN_CENTRE,"%s",&shuffle_move_sequence[0]);
          al_flip_display();
          al_shutdown_ttf_addon();
 
@@ -254,4 +278,21 @@ void move_execute(int moveid)
       else
       move_sequence+=((char)moveid+48);
       move_sequence+=" ";
+}
+void draw_buttons()
+{
+   for (int i=0;i<16;i++)
+   {
+      al_draw_filled_circle(centre[i][0], centre[i][1], radius, al_map_rgb(255,0,0));
+   }
+}
+void draw_button_labels()
+{
+         al_init_ttf_addon(); 
+         ALLEGRO_FONT *font = al_load_ttf_font("Ubuntu-B.ttf",20,0 );
+         for (int i=0;i<16;i++)
+         {
+            al_draw_textf(font,al_map_rgb(255,255,255),centre[i][0]+2,centre[i][1]-10, ALLEGRO_ALIGN_CENTRE,"%s",&moves[i][0]);
+         }
+         al_shutdown_ttf_addon();
 }
