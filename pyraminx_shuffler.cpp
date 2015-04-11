@@ -97,6 +97,7 @@ int main(int argc, char **argv){
       al_wait_for_event(event_queue, &ev);
  
       if(ev.type == ALLEGRO_EVENT_TIMER) {
+         
          redraw = true;
       }
       else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
