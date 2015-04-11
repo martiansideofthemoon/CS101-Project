@@ -103,6 +103,8 @@ public class MainActivity extends ActionBarActivity {
         } else {
             // display error
         }
+        TextView t=(TextView)findViewById(R.id.edit_message);
+        t.setText("Successfully Sent!!");
 
     }
 
@@ -152,6 +154,13 @@ public class MainActivity extends ActionBarActivity {
             TextView smallText = (TextView) findViewById(R.id.edit_message);
             width = image.getWidth();
             height = image.getHeight();
+            //Deciding parameters
+            stddeviationcap=3*((double)width/90)*((double)height/162);;
+            double mincount1=100*((double)(width*height)/(90*162));
+            mincount=(int)mincount1;
+            minlength=10*((double)width/90)*((double)height/162);
+            Log.d("Values of stddev, mincount,min length",stddeviationcap+","+mincount+","+minlength);
+            //Deciding parameters
             for (int i=0;i<width;i++)
             {
                 for (int j=0;j<height;j++)
@@ -176,7 +185,8 @@ public class MainActivity extends ActionBarActivity {
 
             noiseRemoval();
             ImageView mImageView = (ImageView) findViewById(R.id.mImageView);
-            mImageView.setImageBitmap(test2);
+            Bitmap resized = Bitmap.createScaledBitmap(test2, (int)width*3, (int)height*3, true);
+            mImageView.setImageBitmap(resized);
             smallText.setText(messagefinal);
             //Log.e("MainActivity",messagefinal);
 
@@ -210,7 +220,7 @@ public class MainActivity extends ActionBarActivity {
             //Log.d("HSB values at ",hsb[0]+","+hsb[1]+","+hsb[2]);
             hsb[0] = 1 - hsb[0] / 360;
             if (k == 0) {
-                if (hsb[0] > 0.40 && hsb[0] < 0.46 && hsb[1] > 0.5 && hsb[2] > 0.4)
+                if (hsb[0] > 0.40 && hsb[0] < 0.47 && hsb[1] > 0.5 && hsb[2] > 0.6)
                     return true;
                 else return false;
             } else if (k == 1) {
@@ -222,7 +232,7 @@ public class MainActivity extends ActionBarActivity {
                     return true;
                 else return false;
             } else if (k == 3) {
-                if (hsb[0] > 0.7 && hsb[0] < 0.8 && hsb[1] > 0.2 && hsb[2] > 0.4)
+                if (hsb[0] > 0.7 && hsb[0] < 0.82 && hsb[1] > 0.2 && hsb[2] > 0.4)
                     return true;
                 else return false;
             }
@@ -605,6 +615,7 @@ public class MainActivity extends ActionBarActivity {
                         new DataOutputStream(outToServer);
 
                 out.writeUTF(messagefinal);
+
                 InputStream inFromServer = client.getInputStream();
                 DataInputStream in =
                         new DataInputStream(inFromServer);
