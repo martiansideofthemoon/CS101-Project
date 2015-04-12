@@ -6,8 +6,8 @@ WORK DIVISION
 
 Common
 !!! SRS -- DONE
-!! Decide the exact design of GUI of app/computer application
-!! Integration of project
+!! Decide the exact design of GUI of app/computer application -- DONE
+!! Integration of project -- ??
 !!! Debug all codes to perfection
 !! Video of working
 !! Documentation
@@ -19,10 +19,10 @@ Kalpesh
 !!! Setup of Sockets to receive data from mobile -- DONE
 !!! Setup of OpenGL -- DONE
 !!! Color data collection -- DONE
-! Setup for transportation via IITB-Wireless
+! Setup for transportation via IITB-Wireless -- CANCELLED
 !!! Finalization of Color functions (Normal/Vector/HSV approach) -- DONE
-!! Decision of file organization of final project
-! App Design implementation
+!! Decision of file organization of final project -- DONE
+! App Design implementation - DONE
 
 Karan
 !!! Knowledge of BFS/BST/AVL -- DONE
@@ -30,20 +30,20 @@ Karan
 !!! Implementation of BST/AVL data structures -- DONE
 !!! Graph back-tracking algorithm to generate final output -- DONE
 ! File handling to receive data (??) -- DONE
-!!! Drawing 3D tetrahedron with stickers in OpenGL
-!! Camera-Mouse handling in OpenGL
-! File handling for generation of sorted solution file (Only if BST-AVL is not fast enough)
+!!! Drawing 2D tetrahedron with stickers in Allegro -- DONE
+!! Camera-Mouse handling in OpenGL -- CANCELLED
+! File handling for generation of sorted solution file (Only if BST-AVL is not fast enough) -- CANCELLED
 
 Harita
 !! Pyraminx shuffling algorithm -- DONE
 !!! Knowledge of BFS/BST/AVL
 !!! Algorithm to solve tips of Pyraminx -- DONE
 !! Designing Working Menu Bar
-!! Interface for Mode 3 (cube solver)
+!! Interface for Mode 3 (cube solver) -- DONE
 
 Roshan
 !!! Knowledge of BFS/BST/AVL
 !!! Algorithm to determine fourth side of Pyraminx from matrix -- CANCELLED
 !!! Interface for Mode 1 (Displaying image processed solution)
 !! Interface for Mode 2 (Algorithm finder)
-!! Interface for Mode 3 analysis
+!! Interface for Mode 3 analysis -- DONE
