@@ -23,8 +23,10 @@ const int screen_Width=1000;
 const int screen_Height=1000;
 int centre[16][2]={{100,550},{200,550},{300,550},{400,550},{500,550},{600,550},{700,550},{800,550},
                   {100,600},{200,600},{300,600},{400,600},{500,600},{600,600},{700,600},{800,600}};
-double endpoints[16][4]={{1.5,1.5,-1.5,1.5},{-1.5,1.5,1.5,1.5},{0,3,-1.5,1.5},{-1.5,1.5,0,3},
-                         {1.5,1.5,0,3},{0,3,1.5,1.5},}   ;               
+double endpoints[16][4]={{1.5,1.5,-1.5,1.5},{-1.5,1.5,1.5,1.5},{-1.5,1.5,0,3},{0,3,-1.5,1.5},
+                         {0,3,1.5,1.5}  ,    {1.5,1.5,0,3}    ,  {0,1.5,0,3} ,   {0,3,0,1.5},
+                         {0.5,0.5,-0.5,0.5},{-0.5,0.5,0.5,0.5},{-2.5,2.5,-2,3},{-2,3,-2.5,2.5},
+                         {2,3,2.5,2.5} ,    {2.5,2.5,2,3}   ,  {0,2.25,0,3},   {0,3,0,2.25} };               
 int x_origin=500;
 int radius=15;
 int start_x_origin=500;
@@ -39,12 +41,14 @@ double length=1;
 const float rectangle_y1=600;
 const float rectangle_y2=662.5;
 float rectangle_x1=45,rectangle_x2=105;
+float startpoint_x=0,startpoint_y=0,endpoint_x=0,endpoint_y=0;
+int arrow_counter=-1;
 const float FPS = 2;
 bool flag=true;
 bool isback=false;
 void draw_pyraminx_sticker(double, double, int, int);
 void draw_pyraminx_face(int type);
-void draw_arrow(int start_point_x ,int start_point_y ,int end_point_x ,int end_point_y,bool isback,float theta);
+void draw_arrow(int start_point_x ,int start_point_y ,int end_point_x ,int end_point_y,bool isBack);
 int main(int argc, char **argv){
    
    
@@ -107,7 +111,12 @@ int main(int argc, char **argv){
          {
             solved_move_sequence+=moves[solved_moves[i]]+" ";
          }
-
+         
+         arrow_counter++;
+         startpoint_x=start_x_origin + endpoints[solved_moves[arrow_counter]][0]*0.5*scale_coordinate_to_pixel;
+         startpoint_y=start_y_origin + endpoints[solved_moves[arrow_counter]][1]*sqrt(3)/2*scale_coordinate_to_pixel;
+         endpoint_x  =start_x_origin + endpoints[solved_moves[arrow_counter]][2]*0.5*scale_coordinate_to_pixel;
+         endpoint_y  =start_y_origin + endpoints[solved_moves[arrow_counter]][3]*sqrt(3)/2*scale_coordinate_to_pixel;
    
    while(1)
    {
@@ -121,9 +130,28 @@ int main(int argc, char **argv){
          break;
       }
       else if (ev.type==ALLEGRO_EVENT_MOUSE_BUTTON_UP){
+               arrow_counter++;
                rectangle_x1+=60;
                rectangle_x2+=60;
-         }
+               startpoint_x=start_x_origin + endpoints[solved_moves[arrow_counter]][0]*0.5*scale_coordinate_to_pixel;
+               startpoint_y=start_y_origin + endpoints[solved_moves[arrow_counter]][1]*sqrt(3)/2*scale_coordinate_to_pixel;
+               endpoint_x  =start_x_origin + endpoints[solved_moves[arrow_counter]][2]*0.5*scale_coordinate_to_pixel;
+               endpoint_y  =start_y_origin + endpoints[solved_moves[arrow_counter]][3]*sqrt(3)/2*scale_coordinate_to_pixel;
+               if(solved_moves[arrow_counter]==6||solved_moves[arrow_counter]==7||solved_moves[arrow_counter]==14||solved_moves[arrow_counter]==15)
+                  isback=true;
+               else isback=false;
+               if(arrow_counter==solved_moves_counter)
+               {
+                  arrow_counter=0;
+                  rectangle_x1=600;
+                  rectangle_x2=662.5;
+                  startpoint_x=start_x_origin + endpoints[solved_moves[arrow_counter]][0]*0.5*scale_coordinate_to_pixel;
+                  startpoint_y=start_y_origin + endpoints[solved_moves[arrow_counter]][1]*sqrt(3)/2*scale_coordinate_to_pixel;
+                  endpoint_x  =start_x_origin + endpoints[solved_moves[arrow_counter]][2]*0.5*scale_coordinate_to_pixel;
+                  endpoint_y  =start_y_origin + endpoints[solved_moves[arrow_counter]][3]*sqrt(3)/2*scale_coordinate_to_pixel;
+
+               }
+               }
 
       if(redraw && al_is_event_queue_empty(event_queue)) {
          redraw = false;
@@ -134,7 +162,7 @@ int main(int argc, char **argv){
          al_init_ttf_addon(); 
          ALLEGRO_FONT *font = al_load_ttf_font("Ubuntu-B.ttf",50,0 );
          
-         draw_arrow(500,500,700,300,false,PI/3);
+         draw_arrow(startpoint_x,startpoint_y,endpoint_x,endpoint_y,isback);
          al_draw_rectangle( rectangle_x1, rectangle_y1, rectangle_x2, rectangle_y2,  al_map_rgb(255,255,0), 1);
          al_draw_textf(font,al_map_rgb(255,255,255),50,y_origin+600, ALLEGRO_ALIGN_LEFT,"%s",&solved_move_sequence[0]);
          al_flip_display();
@@ -209,31 +237,36 @@ void draw_pyraminx_sticker(double x,double y,int type,int facetype)
          }
 }
 
-void draw_arrow(int start_point_x ,int start_point_y ,int end_point_x,int end_point_y,bool isback,float theta){
+void draw_arrow(int start_point_x ,int start_point_y ,int end_point_x,int end_point_y,bool isBack){
    float x1,y1,x2,y2,x3,y3;
    float a1,a2,b1,b2,length;
    a1=start_point_x;
    b1=start_point_y;
    a2=end_point_x;
    b2=end_point_y;
-   length=sqrt((a1-b1)*(a1-b1)+(a2-b2)*(a2-b2));
-   if(!isback){  
-   al_draw_line(start_point_x, start_point_y, end_point_x, end_point_y, al_map_rgb(255,0,0), 5);
+   length=sqrt((a1-a2)*(a1-a2)+(b1-b2)*(b1-b2));
+   if(!isBack){  
+   al_draw_line(start_point_x, start_point_y, end_point_x, end_point_y, al_map_rgb(255,0,0), 2.5);
    x1=  a2;
    y1=  b2;
-   x2=  a2+((a1-a2)+(b1-b2))*length/8192*sqrt(2);
-   y2=  b2+(-(a1-a2)+(b1-b2))*length/8192*sqrt(2);
-   x3=  a2+((a1-a2)-(b1-b2))*length/8192*sqrt(2);
-   y3=  b2+((a1-a2)+(b1-b2))*length/8192*sqrt(2);
-   al_draw_filled_triangle(x1, y1, x2, y2, x3, y3, al_map_rgb(255,0,0));
-   cout<<x1<<" "<<x2<<" "<<x3<<" "<<y1<<" "<<y2<<" "<<y3<<" "<<endl;
+   x2=  x1+((a1-a2)+(b1-b2))/length*sqrt(2)*20;
+   y2=  y1+(-(a1-a2)+(b1-b2))/length*sqrt(2)*20;
+   x3=  x1+((a1-a2)-(b1-b2))/length*sqrt(2)*20;
+   y3=  y1+((a1-a2)+(b1-b2))/length*sqrt(2)*20;
+   al_draw_filled_triangle(x1, y1, x2, y2, x3, y3, al_map_rgb(255,255,0));
    }
    else {
       al_draw_arc((start_point_x+end_point_x)/2,
                   (start_point_y+end_point_y)/2,
                   fabs((start_point_y-end_point_y)/2),
-                  0,fabs((start_point_y-end_point_y)/2)/((start_point_y-end_point_y)/2)*180 ,
-                  al_map_rgb(255,255,0), 10);
+                  PI/2,fabs((start_point_y-end_point_y)/2)/((start_point_y-end_point_y)/2)*PI ,
+                  al_map_rgb(255,0,0), 2.5);
+               x1=a1+fabs((start_point_y-end_point_y)/2)/((start_point_y-end_point_y)/2)*25;
+               y1=min(b2,b1);
+               x2=a2;
+               y2=y1-25;
+               x3=a2;
+               y3=y1+25;
       al_draw_filled_triangle(x1, y1, x2, y2, x3, y3, al_map_rgb(255,255,0));
 
    }
