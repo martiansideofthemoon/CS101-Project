@@ -611,82 +611,84 @@ int* execute(int arr2[4][9]){
 	//cout << "Input received, finding shortest solution.." << endl;
     if (isAlgoFinder)
     {
-    		if (arr1[0][0]!=desired_config[0][0] && desired_config[0][0]!=4)
+    		if (desired_config[0][2]!=desired_config[0][0] && desired_config[0][0]!=4)
     		{
-    			if (arr1[0][0]==desired_config[1][0])
-    			{
-    				solution[solution_length]=9;
-    				solution_length++;
-    			}
-    			else
+    			if (desired_config[0][0]==desired_config[1][2])
     			{
     				solution[solution_length]=8;
     				solution_length++;
-    			}
-    		}
-    		if (arr1[0][4]!=desired_config[0][4] && desired_config[0][4]!=4)
-    		{
-    			if (arr1[0][4]==desired_config[2][8])
-    			{
-    				solution[solution_length]=11;
-    				solution_length++;
+    				arr1[0][0]=1;
+    				arr1[1][0]=2;
+    				arr1[2][0]=0;
+
     			}
     			else
+    			{
+    				solution[solution_length]=9;
+    				solution_length++;
+    				arr1[0][0]=2;
+    				arr1[1][0]=0;
+    				arr1[2][0]=1;
+    			}
+    		}
+    		if (desired_config[0][4]!=desired_config[0][5] && desired_config[0][4]!=4)
+    		{
+    			if (desired_config[0][4]==desired_config[2][7])
     			{
     				solution[solution_length]=10;
     				solution_length++;
-    			}
-    		}
-    		if (arr1[0][8]!=desired_config[0][8] && desired_config[0][8]!=4)
-    		{
-    			if (arr1[0][8]==desired_config[1][4])
-    			{
-    				solution[solution_length]=12;
-    				solution_length++;
+    				arr1[0][4]=2;
+    				arr1[2][8]=3;
+    				arr1[3][4]=0;
     			}
     			else
+    			{
+    				solution[solution_length]=11;
+    				solution_length++;
+    				arr1[0][4]=3;
+    				arr1[2][8]=0;
+    				arr1[3][4]=2;
+    			}
+    		}
+    		if (desired_config[0][8]!=desired_config[0][7] && desired_config[0][8]!=4)
+    		{
+    			if (desired_config[0][8]==desired_config[1][5])
     			{
     				solution[solution_length]=13;
     				solution_length++;
-    			}
-    		}
-    		if (arr1[1][8]!=desired_config[1][8] && desired_config[1][8]!=4)
-			{
-				if (arr1[1][8]==desired_config[2][4])
-    			{
-    				solution[solution_length]=14;
-    				solution_length++;
+    				arr1[0][8]=1;
+    				arr1[1][4]=3;
+    				arr1[3][0]=0;
     			}
     			else
     			{
+    				solution[solution_length]=12;
+    				solution_length++;
+    				arr1[0][8]=3;
+    				arr1[1][4]=0;
+    				arr1[3][0]=1;
+    			}
+    		}
+    		if (desired_config[1][8]!=desired_config[1][7] && desired_config[1][8]!=4)
+			{
+				if (desired_config[1][8]==desired_config[2][4])
+    			{
     				solution[solution_length]=15;
     				solution_length++;
+    				arr1[1][8]=2;
+    				arr1[2][4]=3;
+    				arr1[3][8]=1;
+    			}
+    			else
+    			{
+    				solution[solution_length]=14;
+    				solution_length++;
+    				arr1[1][8]=1;
+    				arr1[2][4]=2;
+    				arr1[3][8]=3;
     			}
 			}
-			if (desired_config[0][0]!=4)
-			{
-			arr1[0][0]=desired_config[0][0];
-			arr1[1][0]=desired_config[1][0];
-			arr1[2][0]=desired_config[2][0];	
-			}
-			if (desired_config[0][4]!=4)
-			{
-			arr1[0][4]=desired_config[0][4];
-			arr1[2][8]=desired_config[2][8];
-			arr1[3][4]=desired_config[3][4];
-			}
-			if (desired_config[0][8]!=4)
-			{
-			arr1[0][8]=desired_config[0][8];
-			arr1[1][4]=desired_config[1][4];
-			arr1[3][0]=desired_config[3][0];
-			}
-			if (desired_config[1][8]!=4)
-			{
-			arr1[1][8]=desired_config[1][8];
-			arr1[3][8]=desired_config[3][8];
-			arr1[2][4]=desired_config[2][4];
-			}
+			
 			
 			
 			/*for (int i=0;i<4;i++)

@@ -597,5 +597,6 @@ int main(){
 	}*/
 	cout << tips;
 	bfs(arr1);
+	
 	cout<<"khatam" << endl;
 }
