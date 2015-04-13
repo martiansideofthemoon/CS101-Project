@@ -23,7 +23,7 @@ while [ $choice -ne 5 ]; do
 read choice
 # bash nested if/else
 if [ $choice -eq 1 ] ; then
- 
+        ifconfig
         java GreetingServer 6066
         ./image_processed_cube_solver
         ./solution_display
