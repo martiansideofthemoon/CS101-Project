@@ -56,6 +56,7 @@ int main()
 	cout << endl;
 	int active_move=0;
 	cout << "Shortest solution from the start state is : ";
+  cout << "yay" << endl;
 	int *sol=execute(sticker_colors);
 		int sol_len=sol_length();
 		//cout << "Shortest solution after this move is ";

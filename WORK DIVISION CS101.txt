@@ -44,6 +44,6 @@ Harita
 Roshan
 !!! Knowledge of BFS/BST/AVL
 !!! Algorithm to determine fourth side of Pyraminx from matrix -- CANCELLED
-!!! Interface for Mode 1 (Displaying image processed solution)
-!! Interface for Mode 2 (Algorithm finder)
+!!! Interface for Mode 1 (Displaying image processed solution) -- DONE
+!! Interface for Mode 2 (Algorithm finder) -- DONE
 !! Interface for Mode 3 analysis -- DONE
