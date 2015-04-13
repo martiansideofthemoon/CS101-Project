@@ -24,6 +24,9 @@ public:
     	}
 };
 int backtrack_counter;
+bool isSolvable=false;
+bool isAlgoFinder=false;
+int desired_config[4][9];
 //bool found;													// to check whether desired array is found.
 int desired[4][9],move_required[11];											// the desired array
 int currnodes[1000000][4][9],next[1000000][4][9];
@@ -366,6 +369,8 @@ bool check(int arr1[4][9],int arr2[4][9])
 }
 
 bool stop_for_ip(int arr[4][9]){
+	if (isAlgoFinder==false)
+	{
 	bool flag=false;
 	//cout<<"yo ";
 	for(int i=0;i<4;i++)
@@ -382,7 +387,29 @@ bool stop_for_ip(int arr[4][9]){
 			//cout<<flag<<endl;	
 		}
 	}
+	if (flag) isSolvable=true;
 	return flag;
+	}
+	else
+	{
+		bool flag=true;
+		for (int i=0;i<4;i++)
+		{
+			for (int j=0;j<9;j++)
+			{
+				if (desired_config[i][j]==4)
+					continue;
+				else
+				{
+					if (arr[i][j]!=desired_config[i][j])
+						flag=false;
+				}
+			}
+		}
+		if (flag) isSolvable=true;
+		return flag;
+	}
+	
 }
 
 
@@ -582,6 +609,12 @@ int* execute(int arr2[4][9]){
     	infile.get(c);
     }*/
 	//cout << "Input received, finding shortest solution.." << endl;
+    if (isAlgoFinder)
+    {
+    		
+    }
+    else
+    {
 	string tips="";
 	if (arr1[0][2]!=arr1[0][0])
 	{
@@ -647,7 +680,7 @@ int* execute(int arr2[4][9]){
 	arr1[3][0]=arr1[3][2];
 	arr1[3][4]=arr1[3][5];
 	arr1[3][8]=arr1[3][7];
-	
+	}
 	//cout << tips;
 
 	bfs(arr1);
@@ -657,6 +690,21 @@ int* execute(int arr2[4][9]){
 int sol_length()
 {
 	return solution_length;
+}
+bool solution_found()
+{
+	return isSolvable;
+}
+void algo_finder_config(int desired[4][9])
+{
+	isAlgoFinder=true;
+	for (int i=0;i<4;i++)
+	{
+		for (int j=0;j<9;j++)
+		{
+			desired_config[i][j]=desired[i][j];
+		}
+	}
 }
 /*int main()
 {
