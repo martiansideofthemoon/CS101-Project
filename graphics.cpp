@@ -142,6 +142,7 @@ int main(int argc, char **argv){
                else isback=false;
                if(arrow_counter==solved_moves_counter)
                {
+                  cout << "yay" << endl;
                   arrow_counter=0;
                   rectangle_x1=600;
                   rectangle_x2=662.5;
