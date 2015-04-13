@@ -611,7 +611,95 @@ int* execute(int arr2[4][9]){
 	//cout << "Input received, finding shortest solution.." << endl;
     if (isAlgoFinder)
     {
-    		
+    		if (arr1[0][0]!=desired_config[0][0] && desired_config[0][0]!=4)
+    		{
+    			if (arr1[0][0]==desired_config[1][0])
+    			{
+    				solution[solution_length]=9;
+    				solution_length++;
+    			}
+    			else
+    			{
+    				solution[solution_length]=8;
+    				solution_length++;
+    			}
+    		}
+    		if (arr1[0][4]!=desired_config[0][4] && desired_config[0][4]!=4)
+    		{
+    			if (arr1[0][4]==desired_config[2][8])
+    			{
+    				solution[solution_length]=11;
+    				solution_length++;
+    			}
+    			else
+    			{
+    				solution[solution_length]=10;
+    				solution_length++;
+    			}
+    		}
+    		if (arr1[0][8]!=desired_config[0][8] && desired_config[0][8]!=4)
+    		{
+    			if (arr1[0][8]==desired_config[1][4])
+    			{
+    				solution[solution_length]=12;
+    				solution_length++;
+    			}
+    			else
+    			{
+    				solution[solution_length]=13;
+    				solution_length++;
+    			}
+    		}
+    		if (arr1[1][8]!=desired_config[1][8] && desired_config[1][8]!=4)
+			{
+				if (arr1[1][8]==desired_config[2][4])
+    			{
+    				solution[solution_length]=14;
+    				solution_length++;
+    			}
+    			else
+    			{
+    				solution[solution_length]=15;
+    				solution_length++;
+    			}
+			}
+			if (desired_config[0][0]!=4)
+			{
+			arr1[0][0]=desired_config[0][0];
+			arr1[1][0]=desired_config[1][0];
+			arr1[2][0]=desired_config[2][0];	
+			}
+			if (desired_config[0][4]!=4)
+			{
+			arr1[0][4]=desired_config[0][4];
+			arr1[2][8]=desired_config[2][8];
+			arr1[3][4]=desired_config[3][4];
+			}
+			if (desired_config[0][8]!=4)
+			{
+			arr1[0][8]=desired_config[0][8];
+			arr1[1][4]=desired_config[1][4];
+			arr1[3][0]=desired_config[3][0];
+			}
+			if (desired_config[1][8]!=4)
+			{
+			arr1[1][8]=desired_config[1][8];
+			arr1[3][8]=desired_config[3][8];
+			arr1[2][4]=desired_config[2][4];
+			}
+			
+			
+			/*for (int i=0;i<4;i++)
+			{
+				for (int j=0;j<9;j++) cout << arr1[i][j];
+				cout << endl;
+			}
+			cout << endl;
+			for (int i=0;i<4;i++)
+			{
+				for (int j=0;j<9;j++) cout << desired_config[i][j];
+				cout << endl;
+			}*/
     }
     else
     {
@@ -680,6 +768,10 @@ int* execute(int arr2[4][9]){
 	arr1[3][0]=arr1[3][2];
 	arr1[3][4]=arr1[3][5];
 	arr1[3][8]=arr1[3][7];
+	}
+	if (stop_for_ip(arr1))
+	{
+		return solution;
 	}
 	//cout << tips;
 

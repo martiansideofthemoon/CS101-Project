@@ -53,8 +53,8 @@ int main()
 	else
 	{
 		int sol_len=sol_length();
-	cout << endl;
-	cout << "Shortest solution from the start state is : ";
+	//cout << endl;
+	cout << "Shortest solution from the start cube state to solved cube is : ";
 		
 	int sol[sol_len];
 	for (int i=0;i<sol_len;i++)
