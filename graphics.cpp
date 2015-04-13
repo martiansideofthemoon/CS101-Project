@@ -155,7 +155,22 @@ int main(int argc, char **argv){
                if(solved_moves[arrow_counter]==6||solved_moves[arrow_counter]==7||solved_moves[arrow_counter]==14||solved_moves[arrow_counter]==15)
                   isback=true;
                else isback=false;
+<<<<<<< HEAD
            
+=======
+               if(arrow_counter==solved_moves_counter)
+               {
+                  cout << "yay" << endl;
+                  arrow_counter=0;
+                  rectangle_x1=600;
+                  rectangle_x2=662.5;
+                  startpoint_x=start_x_origin + endpoints[solved_moves[arrow_counter]][0]*0.5*scale_coordinate_to_pixel;
+                  startpoint_y=start_y_origin + endpoints[solved_moves[arrow_counter]][1]*sqrt(3)/2*scale_coordinate_to_pixel;
+                  endpoint_x  =start_x_origin + endpoints[solved_moves[arrow_counter]][2]*0.5*scale_coordinate_to_pixel;
+                  endpoint_y  =start_y_origin + endpoints[solved_moves[arrow_counter]][3]*sqrt(3)/2*scale_coordinate_to_pixel;
+
+               }
+>>>>>>> b3f67a8b5df9bc48bba40b20125ef5571cdcfa9b
                }
             }
       if(redraw && al_is_event_queue_empty(event_queue)) {

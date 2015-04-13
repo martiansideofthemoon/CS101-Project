@@ -113,6 +113,7 @@ int main(int argc, char **argv){
       {
          int mouse_x=ev.mouse.x;
          int mouse_y=ev.mouse.y;
+         bool flag=false;
          for (int i=0;i<num_buttons;i++)
          {
             if (sqrt((mouse_x-centre[i][0])*(mouse_x-centre[i][0])+(mouse_y-centre[i][1])*(mouse_y-centre[i][1]))<radius)
@@ -131,13 +132,14 @@ int main(int argc, char **argv){
                {
                   increment_active_coordinate();
                }
-               else
+               else if (i==7)
                {
                   output_pyraminx_state();
-                  break;
+                  flag=true;
                }
             }
          }
+         if (flag) break;
       }
       if(redraw && al_is_event_queue_empty(event_queue)) {
          redraw = false;
