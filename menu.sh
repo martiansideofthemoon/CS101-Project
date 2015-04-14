@@ -11,14 +11,15 @@ function menu
  echo "3. generate algorithms for your need"
  echo "4. get help"
  echo "5. setup files"
- echo "6. exit"
+ echo "6. setup allegro"
+ echo "7. exit"
  echo -n "Please enter your choice? "
 }
 # Loop while the variable choice is equal 4
 # bash while loop
 menu
 
-while [ $choice -ne 6 ]; do
+while [ $choice -ne 7 ]; do
  
 # read user input
 read choice
@@ -52,7 +53,12 @@ else
                         		./setup.sh
                         		menu
                         	else
-                        		sleep 1;
+                        		if [ $choice -eq 6 ] ; then
+                        			./setup_allegro.sh
+                        			menu
+                        		else 
+                        			sleep 1
+                        		fi
                         	fi
                         fi
                 fi   

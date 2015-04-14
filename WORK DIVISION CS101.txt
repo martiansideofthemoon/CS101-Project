@@ -7,10 +7,11 @@ WORK DIVISION
 Common
 !!! SRS -- DONE
 !! Decide the exact design of GUI of app/computer application -- DONE
-!! Integration of project -- ??
+!! Integration of project -- DONE (using bash)
 !!! Debug all codes to perfection
-!! Video of working
-!! Documentation
+!!! Documentation
+!!! Readme file
+
 
 Kalpesh
 !!! Knowledge of BFS/BST/AVL -- DONE
@@ -38,8 +39,9 @@ Harita
 !! Pyraminx shuffling algorithm -- DONE
 !!! Knowledge of BFS/BST/AVL
 !!! Algorithm to solve tips of Pyraminx -- DONE
-!! Designing Working Menu Bar
+!! Designing Working Menu Bar -- DONE
 !! Interface for Mode 3 (cube solver) -- DONE
+!!! Presentation
 
 Roshan
 !!! Knowledge of BFS/BST/AVL
@@ -47,3 +49,4 @@ Roshan
 !!! Interface for Mode 1 (Displaying image processed solution) -- DONE
 !! Interface for Mode 2 (Algorithm finder) -- DONE
 !! Interface for Mode 3 analysis -- DONE
+!!! Video of working
