@@ -220,7 +220,7 @@ public class MainActivity extends ActionBarActivity {
             //Log.d("HSB values at ",hsb[0]+","+hsb[1]+","+hsb[2]);
             hsb[0] = 1 - hsb[0] / 360;
             if (k == 0) {
-                if (hsb[0] > 0.40 && hsb[0] < 0.47 && hsb[1] > 0.5 && hsb[2] > 0.6)
+                if (hsb[0] > 0.40 && hsb[0] < 0.47 && hsb[1] > 0.5 && hsb[2] > 0.5)
                     return true;
                 else return false;
             } else if (k == 1) {
