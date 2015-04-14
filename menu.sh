@@ -57,7 +57,12 @@ else
                         			./setup_allegro.sh
                         			menu
                         		else 
-                        			sleep 1
+                        			if [ $choice -eq 7 ] ; then
+                                        exit
+                                    else
+                                        echo "Enter valid input"
+                                        menu
+                                    fi
                         		fi
                         	fi
                         fi

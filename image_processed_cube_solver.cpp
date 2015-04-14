@@ -42,6 +42,9 @@ int main()
     bool sol_found=solution_found();
 	if (sol_found==false)
 	{
+        ofstream ofile("solved_moves.txt");
+        ofile << "";
+        ofile.close();
 		cout << "Solution not found. Please enter valid input. " << endl;
 	}
 	else
