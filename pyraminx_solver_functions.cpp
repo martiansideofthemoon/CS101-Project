@@ -671,22 +671,22 @@ int* execute(int arr2[4][9]){
     		}
     		if (desired_config[1][8]!=desired_config[1][7] && desired_config[1][8]!=4)
 			{
-				if (desired_config[1][8]==desired_config[2][4])
-    			{
-    				solution[solution_length]=14;
-    				solution_length++;
-    				arr1[1][8]=1;
-    				arr1[2][4]=2;
-    				arr1[3][8]=3;
-    			}
-    			else
+				if (desired_config[1][8]==desired_config[2][5])
     			{
     				solution[solution_length]=15;
     				solution_length++;
-    				
     				arr1[1][8]=2;
     				arr1[2][4]=3;
     				arr1[3][8]=1;
+    			}
+    			else
+    			{
+    				solution[solution_length]=14;
+    				solution_length++;
+    				
+    				arr1[1][8]=3;
+    				arr1[2][4]=1;
+    				arr1[3][8]=2;
     			}
 			}
 			

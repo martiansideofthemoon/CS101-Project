@@ -1,0 +1,7 @@
+The previous solution picture appears when there's no solution! -- FIXED
+Server should close after 4 received files
+Rectangles' orientation -- CHANGE FONT
+light.
+Error in display for back as first move -- FIXED
+seg fault
+FPS fixing

@@ -38,9 +38,11 @@ public class GreetingServer extends Thread
               + server.getLocalSocketAddress() + "\nGoodbye!");
             server.close();
              // writes the bytes
-      
-      os.close();
+            os.close();
      
+      if (stickercolors.length() > 30)
+         break;
+      
       
          }catch(SocketTimeoutException s)
          {
