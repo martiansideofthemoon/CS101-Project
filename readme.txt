@@ -3,3 +3,5 @@ Server should close after 4 recieved files
 Rectangles' orientation
 light.
 Error in display for back as first move
+seg fault
+FPS fixing

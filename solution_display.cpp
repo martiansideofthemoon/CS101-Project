@@ -40,7 +40,7 @@ double offset=0.08;
 double length=1;
 const float rectangle_y1=600;
 const float rectangle_y2=662.5;
-float rectangle_x1=45,rectangle_x2=105;
+float rectangle_x1=45,rectangle_x2=95;
 float startpoint_x=0,startpoint_y=0,endpoint_x=0,endpoint_y=0;
 int arrow_counter=-1;
 const float FPS = 2;
@@ -134,7 +134,7 @@ int main(int argc, char **argv){
                   {
                   arrow_counter=0;
                   rectangle_x1=45;
-                  rectangle_x2=105;
+                  rectangle_x2=95;
                   startpoint_x=start_x_origin + endpoints[solved_moves[arrow_counter]][0]*0.5*scale_coordinate_to_pixel;
                   startpoint_y=start_y_origin + endpoints[solved_moves[arrow_counter]][1]*sqrt(3)/2*scale_coordinate_to_pixel;
                   endpoint_x  =start_x_origin + endpoints[solved_moves[arrow_counter]][2]*0.5*scale_coordinate_to_pixel;
@@ -146,8 +146,8 @@ int main(int argc, char **argv){
                   else 
                 {
                   arrow_counter++;
-                rectangle_x1+=60;
-               rectangle_x2+=60;
+                rectangle_x1+=57;
+               rectangle_x2+=57;
                startpoint_x=start_x_origin + endpoints[solved_moves[arrow_counter]][0]*0.5*scale_coordinate_to_pixel;
                startpoint_y=start_y_origin + endpoints[solved_moves[arrow_counter]][1]*sqrt(3)/2*scale_coordinate_to_pixel;
                endpoint_x  =start_x_origin + endpoints[solved_moves[arrow_counter]][2]*0.5*scale_coordinate_to_pixel;

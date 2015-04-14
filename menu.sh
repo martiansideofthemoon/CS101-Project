@@ -10,14 +10,15 @@ function menu
  echo "2. shuffle and solve a pyraminx and get a complete analysis"
  echo "3. generate algorithms for your need"
  echo "4. get help"
- echo "5. exit"
+ echo "5. setup files"
+ echo "6. exit"
  echo -n "Please enter your choice? "
 }
 # Loop while the variable choice is equal 4
 # bash while loop
 menu
 
-while [ $choice -ne 5 ]; do
+while [ $choice -ne 6 ]; do
  
 # read user input
 read choice
@@ -47,7 +48,12 @@ else
                         	subl readme.txt
                         	menu
                         else
-                        	echo "Enter something valid"
+                        	if [ $choice -eq 5 ] ; then
+                        		./setup.sh
+                        		menu
+                        	else
+                        		sleep 1;
+                        	fi
                         fi
                 fi   
         fi
