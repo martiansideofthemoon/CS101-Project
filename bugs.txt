@@ -1,7 +1,8 @@
 The previous solution picture appears when there's no solution! -- FIXED
-Server should close after 4 received files
+Server should close after 4 received files -- FIXED
 Rectangles' orientation -- CHANGE FONT
-light.
+light. -- IMPROVED
 Error in display for back as first move -- FIXED
 seg fault
 FPS fixing
+Code doesn't give error messages for wrong input files

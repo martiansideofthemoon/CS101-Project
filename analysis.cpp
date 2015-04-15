@@ -6,13 +6,14 @@ using namespace std;
 int sticker_colors[4][9]= {{0,0,0,0,0,0,0,0,0},
                            {1,1,1,1,1,1,1,1,1},
                            {2,2,2,2,2,2,2,2,2},
-                           {3,3,3,3,3,3,3,3,3}};
-string moves[16]={"U ", "U' ", "L ", "L' ","R ", "R' ", "B ","B' ","u ","u' ","l ","l' ","r ","r' ","b ","b' "};
-int move_number_array[16];
-int attempt_sequence[1000];
-int num_attempts=0;
-void adjacency1(int ip[4][9],int adj[16][4][9]);
-void execute_move(int);
+                           {3,3,3,3,3,3,3,3,3}}; //Pyraminx Array. Solved initally
+string moves[16]={"U ", "U' ", "L ", "L' ","R ", "R' ", "B ","B' ","u ","u' ","l ","l' ","r ","r' ","b ","b' "}; // set of moves
+int move_number_array[16]; // Set of moves used to shuffle Pyraminx
+int attempt_sequence[1000]; // Set of moves attempted by user
+int num_attempts=0; // number of moves attempted by user
+void adjacency1(int ip[4][9],int adj[16][4][9]); // Prototype to generate adjacency array. This array is the set of all
+                                                 //16 states which can be reached by performing one move on array
+void execute_move(int); // Run the desired move
 int main()
 {
 	ifstream ifile("Analysis.txt");
@@ -20,8 +21,9 @@ int main()
 	for (int i=0;i<15;i++)
 	{
 		string move="";
-		ifile >> move;
+		ifile >> move; //Hold move ID
 		int move_number=0;
+    //Converting string to integer. Storing in move_number
 		if (move[1]=='\0')
 		{
 			move_number=(int)move[0]-48;		
@@ -30,12 +32,13 @@ int main()
 		{
 			move_number=((int)move[0]-48)*10 + ((int)move[1]-48);
 		}
-		cout << moves[move_number];
-		move_number_array[i]=move_number;
-		execute_move(move_number);
+		cout << moves[move_number]; // Printing move name using move array and move ID which is in move_number
+		move_number_array[i]=move_number; // Update move_number array
+		execute_move(move_number); // Run this move to update sticker_colors array
 	}
 	cout << endl;
 	string attempt_string="";
+  //Reading user attempt in a similar manner
 	while (ifile >> attempt_string)
 	{
 		int move_number=0;
@@ -54,10 +57,10 @@ int main()
 	for (int i=0;i<num_attempts;i++)
 		cout << moves[attempt_sequence[i]] << " ";
 	cout << endl;
-	int active_move=0;
+	int active_move=0; // Represents active move in user's solution
 	cout << "Shortest solution from the start state is : ";
   
-	int *sol=execute(sticker_colors);
+	int *sol=execute(sticker_colors); // Generate inital shortest solution. Execute finds shortest solution
 		int sol_len=sol_length();
 		//cout << "Shortest solution after this move is ";
 		for (int i=0;i<sol_len;i++)
@@ -65,19 +68,20 @@ int main()
 			cout << moves[sol[i]];
 		}
 		cout << endl;
+    // We now execute the user's moves one by one and run execute() each time
 	for (active_move=0;active_move<num_attempts;active_move++)
 	{
 		cout << "Analyzing move number " << (active_move+1) << " (" << moves[attempt_sequence[active_move]] << ")..." << endl;
 		
-		execute_move(attempt_sequence[active_move]);
+		execute_move(attempt_sequence[active_move]); // Change sticker_colors array
 
-		sol=execute(sticker_colors);
+		sol=execute(sticker_colors); // Find shortest solution
 
 		sol_len=sol_length();
 		cout << "Shortest solution after this move is ";
 		for (int i=0;i<sol_len;i++)
 		{
-			cout << moves[sol[i]];
+			cout << moves[sol[i]]; // Print it in readable format
 		}
 		cout << endl;
 	}
@@ -87,11 +91,11 @@ int main()
 void execute_move(int moveid)
 {
 	int adj[16][4][9];
-      adjacency1(sticker_colors,adj);
+      adjacency1(sticker_colors,adj); //Generate an array of all possible states achievable after executing one move on array
       for (int a=0;a<4;a++)
       {
          for (int b=0;b<9;b++)
-            sticker_colors[a][b]=adj[moveid][a][b];
+            sticker_colors[a][b]=adj[moveid][a][b]; // set sticker_colors array to the element in adjacency1 array corresponding to moveid
       }
 }
 void adjacency1(int ip[4][9],int adj[16][4][9])
@@ -109,6 +113,8 @@ void adjacency1(int ip[4][9],int adj[16][4][9])
     }
   }
 
+  // Set of instructions written for each of the sixteen moves.
+  
   // for U
   for(int i=0;i<4;i++)
     adj[0][0][i]=ip[1][i];

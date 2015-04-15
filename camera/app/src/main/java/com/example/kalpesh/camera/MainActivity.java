@@ -38,33 +38,34 @@ import static android.widget.ImageView.*;
 
 
 public class MainActivity extends ActionBarActivity {
-    static final int REQUEST_TAKE_PHOTO = 1;
-    String messagefinal = "";
-    int stickercount = 0;
-    Bitmap image;
-    Bitmap test;
-    Bitmap test2;
+    static final int REQUEST_TAKE_PHOTO = 1; //ID for camera integration
+    String messagefinal = ""; //Message to be sent
+    String messagefinal2=""; //Message to be printed under button
+    int stickercount = 0; //Number of stickers
+    Bitmap image; //original
+    Bitmap test; //picture after removing background
+    Bitmap test2; //picture with triangles detected
     int width;
     int height;
-    double possibleLengths[][]=new double[2][3];
+    double possibleLengths[][]=new double[2][3]; //Array of two possible lengths of pyraminx stickers
     static int red=0;
     static int blue=0;
     static int green=0;
-    final int noise_removal=0;
-    final int color_detection=1;
+    final int noise_removal=0; //ID for noise removal mode
+    final int color_detection=1; // ID for color detection mode
     int n1=0,n2=0;
     String[]colorname={"blue","red","green","yellow"};
-    int counter=0;
+    int counter=0; // Pixels in blob
 
-    int color=0;
-    //To be decided
-    double stddeviationcap=3;
-    int mincount=100;
-    double minlength=10;
-    int interval=1;
+    int color=0; // Color ID. Blue, Red, Green, Yellow are 0,1,2,3
+    //To be decided. Depend on phone
+    double stddeviationcap=3; //Maximum std dev in side lengths
+    int mincount=100; // Min pixels in blob
+    double minlength=10; // Min pixel length of sticker
+    int interval=1; // Interval of scanning to detect blobs
     //To be decided
     int limit=60000;
-    double lowertriangles[][]=new double[100][4];
+    double lowertriangles[][]=new double[100][4]; //lower triangle coordinates
     double uppertriangles[][]=new double[100][4];
     int lowertrianglecount=0;
     int uppertrianglecount=0;
@@ -76,14 +77,14 @@ public class MainActivity extends ActionBarActivity {
     int blobRightY=0;
     int blobBottomX=0;
     int blobBottomY=0;
-    double colors[] = new double[9];
-    int frontier[][]=new int[10000][2];
-    int prevfrontier[][]=new int[10000][2];
-    int frontiercount=0;
-    int prevfrontiercount=0;
+    double colors[] = new double[9]; // Final array of colors
+    int frontier[][]=new int[10000][2]; // Used in blob detection
+    int prevfrontier[][]=new int[10000][2]; // Used in blob detection
+    int frontiercount=0; // Used in blob detection
+    int prevfrontiercount=0; // Used in blob detection
     //boolean stickerstatus=false;
     int colorcode[][]={{0,0,255},{255,0,0},{0,255,0},{255,255,0}};
-    int[][]surround={{1,1,1,0,0,-1,-1,-1},{1,0,-1,1,-1,1,0,-1}};
+    int[][]surround={{1,1,1,0,0,-1,-1,-1},{1,0,-1,1,-1,1,0,-1}}; // Used in blob detection
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +94,7 @@ public class MainActivity extends ActionBarActivity {
     String mCurrentPhotoPath;
 
     public void sendData(View view) {
-
+        //Start the Asynchronus process of sending data
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -111,6 +112,7 @@ public class MainActivity extends ActionBarActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     public void clickPic(View view) {
+        //Initialize variables
         for(int i=0;i<9;i++) colors[i]=0;
         lowertrianglecount=0;
         uppertrianglecount=0;
@@ -122,6 +124,7 @@ public class MainActivity extends ActionBarActivity {
                 uppertriangles[i][j]=0;
             }
         }
+        //Start camera app
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -143,18 +146,18 @@ public class MainActivity extends ActionBarActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            //After image is received
             Bundle extras = data.getExtras();
-
             Bitmap image2 = (Bitmap) extras.get("data");
             //image = Bitmap.createBitmap(image2.getWidth(), image2.getHeight(), Bitmap.Config.ARGB);
-            //
+            //Set all images to original initally
             image = image2.copy(image2.getConfig(), true);
             test = image2.copy(image2.getConfig(), true);
             test2 = image2.copy(image2.getConfig(), true);
             TextView smallText = (TextView) findViewById(R.id.edit_message);
             width = image.getWidth();
             height = image.getHeight();
-            //Deciding parameters
+            //Deciding parameters on phone screen size
             stddeviationcap=3*((double)width/90)*((double)height/162);;
             double mincount1=100*((double)(width*height)/(90*162));
             mincount=(int)mincount1;
@@ -165,8 +168,8 @@ public class MainActivity extends ActionBarActivity {
             {
                 for (int j=0;j<height;j++)
                 {
-                    test.setPixel(i, j, Color.WHITE);
-                    test2.setPixel(i, j, Color.WHITE);
+                    test.setPixel(i, j, Color.WHITE); // Setting all to white
+                    test2.setPixel(i, j, Color.WHITE); // Setting all to white
                 }
             }
             for (int i=0;i<width;i++)
@@ -177,23 +180,25 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
             messagefinal = "";
+            messagefinal2="";
             stickercount = 0;
             color = 0;
 
             //Log.e("MainActivity",width+" "+height);
-            findColors();
+            findColors(); // Generate test, and get image with background removed
 
-            noiseRemoval();
+            noiseRemoval(); // Remove small blobs, detect triangles, set messagefinal
             ImageView mImageView = (ImageView) findViewById(R.id.mImageView);
-            Bitmap resized = Bitmap.createScaledBitmap(test2, (int)width*3, (int)height*3, true);
+            Bitmap resized = Bitmap.createScaledBitmap(test2, (int)width*3, (int)height*3, true); // Resize image
             mImageView.setImageBitmap(resized);
-            smallText.setText(messagefinal);
+            smallText.setText(messagefinal2);
             //Log.e("MainActivity",messagefinal);
 
         }
     }
 
     boolean colorTest(int cd, int k,int mode) {
+        //Detect colors
         if (mode == noise_removal) {
 
             if (k == 0) {
@@ -215,24 +220,24 @@ public class MainActivity extends ActionBarActivity {
             }
             return false;
         } else {
-            float hsb[] = new float[3];
+            float hsb[] = new float[3]; // Convert to HUE SAT BRIGHTNESS
             Color.RGBToHSV(Color.red(cd), Color.green(cd), Color.blue(cd), hsb);
             //Log.d("HSB values at ",hsb[0]+","+hsb[1]+","+hsb[2]);
             hsb[0] = 1 - hsb[0] / 360;
             if (k == 0) {
-                if (hsb[0] > 0.40 && hsb[0] < 0.47 && hsb[1] > 0.5 && hsb[2] > 0.5)
+                if (hsb[0] > 0.40 && hsb[0] < 0.47 && hsb[1] > 0.5 && hsb[2] > 0.5) // Color thresholding for BLUE
                     return true;
                 else return false;
             } else if (k == 1) {
-                if ((hsb[0] < 0.05 || hsb[0] > 0.98) && hsb[1] > 0.5 && hsb[2] > 0.4)
+                if ((hsb[0] < 0.05 || hsb[0] > 0.98) && hsb[1] > 0.5 && hsb[2] > 0.4) // Color thresholding for RED
                     return true;
                 else return false;
             } else if (k == 2) {
-                if (hsb[0] > 0.56 && hsb[0] < 0.61 && hsb[1] > 0.5 && hsb[2] > 0.4)
+                if (hsb[0] > 0.56 && hsb[0] < 0.61 && hsb[1] > 0.5 && hsb[2] > 0.4) // Color thresholding for GREEN
                     return true;
                 else return false;
             } else if (k == 3) {
-                if (hsb[0] > 0.7 && hsb[0] < 0.82 && hsb[1] > 0.2 && hsb[2] > 0.4)
+                if (hsb[0] > 0.7 && hsb[0] < 0.82 && hsb[1] > 0.2 && hsb[2] > 0.4) // Color thresholding for YELLOW
                     return true;
                 else return false;
             }
@@ -240,13 +245,13 @@ public class MainActivity extends ActionBarActivity {
         }
     }
     void noiseRemoval() {
-        color = 0;
-        for (int k = 0; k < 4; k++) {
+        color = 0; //Current color
+        for (int k = 0; k < 4; k++) { //Scan intermediate image for all colors
             for (int i = 0; i < width; i += interval) {
                 for (int j = 0; j < height; j += interval) {
                     counter = 0;
                     int rg = test.getPixel(i,j);
-                    if (colorTest(rg, k,noise_removal)) {
+                    if (colorTest(rg, k,noise_removal)) { //Check whether active pixel is this color
                         //Log.d("Color detected");
                         blobTopY = 1500;
                         blobTopX = 0;
@@ -257,7 +262,7 @@ public class MainActivity extends ActionBarActivity {
                         blobBottomX = 0;
                         blobBottomY = 0;
                         //System.out.println("phase");
-                        manip2(i, j);
+                        manip2(i, j); // Blob detector
                         //System.out.println(i+","+j+","+counter);
 
                         //System.out.println(counter);
@@ -269,7 +274,8 @@ public class MainActivity extends ActionBarActivity {
                      counter=0;
                      manip(n1,n2);
                   }*/
-                        if (counter > mincount) {
+                        if (counter > mincount) { // Blob bigger than certain value
+                            // Try to match two triangles. Up pointing and down pointing triangle for each sticker
                             drawLine(blobBottomX, blobBottomY, blobLeftX, blobLeftY);
                             drawLine(blobBottomX, blobBottomY, blobRightX, blobRightY);
                             drawLine(blobTopX, blobTopY, blobLeftX, blobLeftY);
@@ -288,6 +294,7 @@ public class MainActivity extends ActionBarActivity {
                                     avg += possibleLengths[a][b];
                                     //Log.e("MainActivity",""+(double)Math.round(possibleLengths[a][b]*100)/100+" ");
                                 }
+                               //find standard deviation in length
                                 avg = avg / 3;
                                 stddev[a] = 0;
                                 for (int b = 0; b < 3; b++)
@@ -297,7 +304,7 @@ public class MainActivity extends ActionBarActivity {
                                 Log.e("MainActivity",stddev[0]+","+stddev[1]+",");
                             }
 
-                            if (stddev[0] < stddeviationcap && possibleLengths[0][0] > minlength) {
+                            if (stddev[0] < stddeviationcap && possibleLengths[0][0] > minlength) { //check for triangles
                                 //System.out.println("Upper Triangle at (" + i + "," + j + ")");
                                 uppertriangles[uppertrianglecount][0] = i;
                                 uppertriangles[uppertrianglecount][1] = j;
@@ -319,8 +326,11 @@ public class MainActivity extends ActionBarActivity {
                     }
                 }
             }
-            color++;
+            color++; // scan next color
         }
+        //Get coordinates in logical format. This uses fact triangle is upward pointing / lower pointing
+
+        // Linear sorting used to sort the coordinate arrays
         if (uppertrianglecount > 6) {
             for (int i = 0; i < uppertrianglecount - 1; i++) {
                 for (int j = i + 1; j < uppertrianglecount; j++) {
@@ -334,6 +344,8 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         }
+
+        // Linear sorting used to sort the coordinate arrays
         if (lowertrianglecount > 3) {
             for (int i = 0; i < lowertrianglecount - 1; i++) {
                 for (int j = i + 1; j < lowertrianglecount; j++) {
@@ -350,6 +362,7 @@ public class MainActivity extends ActionBarActivity {
         lowertrianglecount = 3;
         uppertrianglecount = 6;
 
+        // Linear sorting used to sort the coordinate arrays
         for (int i = 0; i < lowertrianglecount - 1; i++) {
             for (int j = i + 1; j < lowertrianglecount; j++) {
                 if (lowertriangles[i][1] > lowertriangles[j][1]) {
@@ -397,7 +410,7 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         }
-
+        // Update final array
         colors[0] = uppertriangles[0][3];
         colors[1] = uppertriangles[1][3];
         colors[2] = lowertriangles[0][3];
@@ -407,10 +420,14 @@ public class MainActivity extends ActionBarActivity {
         colors[6] = uppertriangles[4][3];
         colors[7] = lowertriangles[2][3];
         colors[8] = uppertriangles[5][3];
-        for (int i=0;i<9;i++) messagefinal+=""+(int)colors[i];
+        for (int i=0;i<9;i++)
+        {
+            messagefinal+=""+(int)colors[i]; // Update data to be sent
+            messagefinal2+=""+colorname[(int)colors[i]]+";"; // Update data to be printed
+        }
         Log.d("final message",messagefinal);
     }
-    void manip2(int i,int j)
+    void manip2(int i,int j) //Blob detector
     {
         if (j<blobTopY)
         {
@@ -432,59 +449,62 @@ public class MainActivity extends ActionBarActivity {
             blobBottomX=i;
             blobBottomY=j;
         }
-        prevfrontier[0][0]=i;
-        prevfrontier[0][1]=j;
-        counter=1;
+        /*
+        Code makes use of frontier approach. Builds frontiers as in BFS search algorithm and scans blobs
+         */
+        prevfrontier[0][0]=i; //Start frontier
+        prevfrontier[0][1]=j; //Start frontier
+        counter=1; //Start pixel in blob
         prevfrontiercount++;
 
-        test.setPixel(i,j,Color.WHITE);
-        while (prevfrontiercount!=0)
+        test.setPixel(i,j,Color.WHITE); // Convert all visited pixels to white
+        while (prevfrontiercount!=0) // As long as frontiers exist
         {
-            frontiercount=0;
+            frontiercount=0; // Initialize next frontier
 
-            for (int l=0;l<prevfrontiercount;l++)
+            for (int l=0;l<prevfrontiercount;l++) // For every pixel in previous frontier
             {
-                for (int k=0;k<8;k++)
+                for (int k=0;k<8;k++) // Scan surrounding pixels
                 {
                     if (prevfrontier[l][0]+surround[0][k]>=0 && prevfrontier[l][0]+surround[0][k]<width && prevfrontier[l][1]+surround[1][k]>=0 && prevfrontier[l][1]+surround[1][k]<height)
                     {
                         //System.out.println(k);
-
+                        //If within the picture, test whether they are part of blob
                         int abc=test.getPixel(prevfrontier[l][0]+surround[0][k],prevfrontier[l][1]+surround[1][k]);
-                        if (colorTest(abc,color,noise_removal))
+                        if (colorTest(abc,color,noise_removal)) // testing whether they are in blob and not already visited
                         {
-                            frontier[frontiercount][0]=prevfrontier[l][0]+surround[0][k];
+                            frontier[frontiercount][0]=prevfrontier[l][0]+surround[0][k]; //Add to frontier
                             frontier[frontiercount][1]=prevfrontier[l][1]+surround[1][k];
                             counter++;
-                            if (frontier[frontiercount][1]<blobTopY)
+                            if (frontier[frontiercount][1]<blobTopY) // Topmost pixel
                             {
                                 blobTopX=frontier[frontiercount][0];
                                 blobTopY=frontier[frontiercount][1];
                             }
-                            if (frontier[frontiercount][0]<blobLeftX)
+                            if (frontier[frontiercount][0]<blobLeftX) //Leftmost pixel
                             {
                                 blobLeftX=frontier[frontiercount][0];
                                 blobLeftY=frontier[frontiercount][1];
                             }
-                            if (frontier[frontiercount][0]>blobRightX)
+                            if (frontier[frontiercount][0]>blobRightX) //Rightmost pixel
                             {
                                 blobRightX=frontier[frontiercount][0];
                                 blobRightY=frontier[frontiercount][1];
                             }
-                            if (frontier[frontiercount][1]>blobBottomY)
+                            if (frontier[frontiercount][1]>blobBottomY) //Bottomost pixel
                             {
                                 blobBottomX=frontier[frontiercount][0];
                                 blobBottomY=frontier[frontiercount][1];
                             }
                             //System.out.println((i+surround[0][k])+","+(j+surround[1][k]));
                             //manip(i+surround[0][k],j+surround[1][k]);
-                            test.setPixel(frontier[frontiercount][0],frontier[frontiercount][1],Color.WHITE);
-                            frontiercount++;
+                            test.setPixel(frontier[frontiercount][0],frontier[frontiercount][1],Color.WHITE); // set that pixel to white
+                            frontiercount++; // Update frontier count
                         }
                     }
                 }
             }
-            prevfrontiercount=frontiercount;
+            prevfrontiercount=frontiercount; // make next frontier, previous frontier
             for (int k=0;k<frontiercount;k++) prevfrontier[k][0]=frontier[k][0];
             for (int k=0;k<frontiercount;k++) prevfrontier[k][1]=frontier[k][1];
             prevfrontiercount=frontiercount;
@@ -495,7 +515,7 @@ public class MainActivity extends ActionBarActivity {
         double d=Math.sqrt((endx-startx)*(endx-startx)+(endy-starty)*(endy-starty));
         return d;
     }
-    void drawLine(int startx,int starty,int endx,int endy)
+    void drawLine(int startx,int starty,int endx,int endy) // Draw lines
     {
         try {
             if (endx<startx)
@@ -507,12 +527,13 @@ public class MainActivity extends ActionBarActivity {
                 endy=starty;
                 starty=temp1;
             }
+
             double slope = ((double)endy-starty)/(endx-startx);
             //Color BLACK=new Color(0,0,0);
             int prevy=0;
             for (int i=0;i<=(endx-startx);i++)
             {
-                double y=slope*i;
+                double y=slope*i; //Round slope and move those many pixels right and forward
                 int j=prevy;
                 while ((j<=Math.round(y) && slope>=0) || (j>=Math.round(y) && slope<0) )
                 {
@@ -533,7 +554,7 @@ public class MainActivity extends ActionBarActivity {
     }
     void findColors() {
         color=0;
-        for (int k=0;k<4;k++)
+        for (int k=0;k<4;k++) //Scan picture for all three colors
         {
             for (int i=0;i<width;i+=interval)
             {
@@ -600,8 +621,9 @@ public class MainActivity extends ActionBarActivity {
         protected String doInBackground(String... message) {
 
             // params comes from the execute() call: params[0] is the url.
-            EditText ip=(EditText)findViewById(R.id.server_ip);
-            EditText portstring=(EditText)findViewById(R.id.server_port);
+            //SOCKET programming. Sending data ansynchronously
+            EditText ip=(EditText)findViewById(R.id.server_ip); //IP address
+            EditText portstring=(EditText)findViewById(R.id.server_port); // Port number
             String serverName = ip.getText().toString();
             int port = Integer.parseInt(portstring.getText().toString());
             try {
@@ -614,7 +636,7 @@ public class MainActivity extends ActionBarActivity {
                 DataOutputStream out =
                         new DataOutputStream(outToServer);
 
-                out.writeUTF(messagefinal);
+                out.writeUTF(messagefinal); // Final data to be sent
 
                 InputStream inFromServer = client.getInputStream();
                 DataInputStream in =

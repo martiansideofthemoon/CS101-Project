@@ -28,7 +28,7 @@ public class GreetingServer extends Thread
             
             stickercolors+=in.readUTF()+'\n';
             System.out.println(stickercolors);
-      OutputStream os = new FileOutputStream("test.txt");
+      OutputStream os = new FileOutputStream("test.txt"); // Write to test.txt
       for(int x=0; x < stickercolors.length() ; x++){
          os.write(stickercolors.charAt(x));
       }
@@ -40,7 +40,7 @@ public class GreetingServer extends Thread
              // writes the bytes
             os.close();
      
-      if (stickercolors.length() > 30)
+      if (stickercolors.length() > 30) // Close the server when fourth line comes
          break;
       
       
@@ -57,10 +57,10 @@ public class GreetingServer extends Thread
    }
    public static void main(String [] args)
    {
-      int port = Integer.parseInt(args[0]);
+      int port = Integer.parseInt(args[0]); // Port received via command line arguments
       try
       {
-         Thread t = new GreetingServer(port);
+         Thread t = new GreetingServer(port); // Start a thread
          t.start();
       }catch(IOException e)
       {

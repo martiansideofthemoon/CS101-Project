@@ -44,7 +44,9 @@ Analysis.txt : The first line represents the shuffle move symbols using the numb
 
 bugs.txt : List of bugs reported with their status.
 
-camera : The android app.
+camera.apk : The android app.
+
+camera : The Android Studio Project for our app.
 
 GreetingServer.class : The Java server which will receive input and write it to test.txt
 
