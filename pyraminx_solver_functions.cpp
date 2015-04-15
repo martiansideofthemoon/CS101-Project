@@ -36,8 +36,7 @@ int solution_length=0;
 	  /*checked stores all the  nodes that have been checked
 		currnodes stores all the nodes that are to be checked and are reached by making one move on the previous config.
 		next stores all the nodes that can be reached from a given config by making one move
-
-		***** will probably need to initialize level.******/
+	  */
 
 
 node null;															// since no null pointer
@@ -85,7 +84,7 @@ void left_rotate(node* a){
 }
 
 void right_rotate(node* m){
-	node*n;
+	node*n;												// refer to the left rotate function .They are very symmyteric.
 	n=m->left_child;
 	m->left_child=n->right_child;
 	if(n->right_child!=&null)
@@ -102,7 +101,7 @@ void right_rotate(node* m){
 	height(n);
 }
 
-void fix_insert(node* s){
+void fix_insert(node* s){				// the function makes the binar search trees balanced
 node* q;
 q=s;
 int count=0;
@@ -111,7 +110,7 @@ while(!(q==&null))
 {
 	
 	height(q);
-	if(q->right_child->height - q->left_child->height>=2)
+	if(q->right_child->height - q->left_child->height>=2)				// if height difference is more than two.
 	{
 		
 
@@ -142,12 +141,13 @@ while(!(q==&null))
 		}
 	}
 
-	q=q->parent;
+	q=q->parent;                                      // set q as q's parent to basically go up the code
 }
 }
 
 int compare(int key1[4][9],int key2[4][9])
 {
+	// compares the keys such that when an inequality is encountered, it compares the two numbers and returns appropriate values.
 	int var=1;
 	for(int i=0;i<4;i++)
 	{
@@ -350,7 +350,7 @@ int adjacency(int ip[4][9])
 }
 
 bool check(int arr1[4][9],int arr2[4][9])
-{
+{	// checks whether the configuration has already been encountered or not.
 	bool flag=false;
 	for (int i = 0; i < 4; ++i)
 	{
@@ -369,10 +369,9 @@ bool check(int arr1[4][9],int arr2[4][9])
 }
 
 bool stop_for_ip(int arr[4][9]){
-	if (isAlgoFinder==false)
+	if (isAlgoFinder==false)       // checks whether the mode is algo_finder.
 	{
-	bool flag=false;
-	//cout<<"yo ";
+	bool flag=false;			   // checks whether the config reached is the solved one.
 	for(int i=0;i<4;i++)
 	{
 		for(int j=0;j<9;j++)
@@ -383,15 +382,14 @@ bool stop_for_ip(int arr[4][9]){
 			{
 				flag=false;
 				return flag;
-			}
-			//cout<<flag<<endl;	
+			}	
 		}
 	}
 	if (flag) isSolvable=true;
 	return flag;
 	}
 	else
-	{
+	{// checks whether the reached config is the desired config and returns whether desired config is achievable.
 		bool flag=true;
 		for (int i=0;i<4;i++)
 		{
@@ -415,13 +413,11 @@ bool stop_for_ip(int arr[4][9]){
 
 
 
-void backtrack(node* x)
+void backtrack(node* x)			// bactracks from the desired config to the initial config.
 {
 	int i=0;
-	//cout<<"hi";
 	while(x->bfs_parent!=&null){
 		move_required[i]=x->v;
-		//if (i<20) cout << shortest_path[move_required[i]] << " " << endl;
 		i++;
 
 		x=x->bfs_parent;
@@ -433,19 +429,17 @@ void backtrack(node* x)
 }
 
 void shortest_sol(int q){
-	//cout<<"hi";
 	for (int i = q; i >=0; i--)
 	{
 		solution[solution_length]=move_required[i];
 		solution_length++;
-		//cout<<shortest_path[move_required[i]]<<" ";
+		
 	}
-	//cout << endl;
+	
 }
 
 void bfs(int ip[4][9])
 {
-	//cout<<"call";
 	int x=1,next_counter;
 	int arr1[4][9];						// x is to save that how many moves got u there
 	for(int i=0;i<4;i++)
@@ -487,15 +481,7 @@ void bfs(int ip[4][9])
 				if(!flag)
 					continue;
 				checked[nodecounter].v=v;
-				//cout<<v<<endl;
-				/*for(int a=0;a<4;a++)
-				{
-					for(int b=0;b<9;b++)
-					{
-						cout<<arr1[a][b]<<"\t";
-					}
-					cout<<endl;
-				}*/
+
 				if(stop_for_ip(arr1)==true)						// new line.
 					{	
 
@@ -526,7 +512,6 @@ void bfs(int ip[4][9])
 		}
 		currnodes_counter=next_counter;
 		x++;
-		//cout<<nodecounter<<endl;
 	}
 
 
@@ -539,12 +524,11 @@ int* execute(int arr2[4][9]){
 	{
 		for (int j=0;j<9;j++) arr1[i][j]=arr2[i][j];
 	}
-	//int arr1[4][9];
 	null.isNull=true;
 	null.height=-1;
 	root=checked;
 	backtrack_counter=0;
-	for(int i=0;i<SIZE;i++)
+	for(int i=0;i<SIZE;i++)							// initialize the graph to zero.
 	{	
 		for (int j=0;j<4;j++)
 		{
@@ -567,7 +551,7 @@ int* execute(int arr2[4][9]){
 		checked[i].v=0;
 		
 	}
-	for (int i=0;i<4;i++)
+	for (int i=0;i<4;i++)				// initialize desired config to 0.
 	{
 		for (int j=0;j<9;j++) desired[i][j]=0;
 	}
@@ -576,41 +560,10 @@ int* execute(int arr2[4][9]){
    	currnodes_counter=1;
    	for (int i=0;i<15;i++) solution[i]=0;
    	solution_length=0;
-   	/*
-	int number_characters=0;
-	while (number_characters<40)
-	{
-	number_characters=0;
-	ifstream infile; 
-    infile.open("test.txt"); 
-    char c;
-    infile.get(c);
-    int count=0;
-    while (count<4)
-    {
-    	if (c=='\n') count++;
-    	number_characters++;
-    	infile.get(c);
-    	//cout << "abc" << endl;
-    	
-    }
-	infile.close();
-	}
-	ifstream infile; 
-    infile.open("test.txt"); 
-    char c;
-    for (int i=0;i<4;i++)
-    {
-    	for (int j=0;j<9;j++)
-    	{
-    		infile.get(c);
-    		arr1[i][j]=c-'0';
-    	}
-    	infile.get(c);
-    }*/
-	//cout << "Input received, finding shortest solution.." << endl;
+
     if (isAlgoFinder)
-    {
+    {		// the folllowing conditional statements are basically used for solving the tips of the praminx.
+    		// if the tip color is white then dont execute any move.
     		if (desired_config[0][2]!=desired_config[0][0] && desired_config[0][0]!=4)
     		{
     			if (desired_config[0][0]==desired_config[1][2])
@@ -689,20 +642,6 @@ int* execute(int arr2[4][9]){
     				arr1[3][8]=2;
     			}
 			}
-			
-			
-			
-			/*for (int i=0;i<4;i++)
-			{
-				for (int j=0;j<9;j++) cout << arr1[i][j];
-				cout << endl;
-			}
-			cout << endl;
-			for (int i=0;i<4;i++)
-			{
-				for (int j=0;j<9;j++) cout << desired_config[i][j];
-				cout << endl;
-			}*/
     }
     else
     {
@@ -772,15 +711,12 @@ int* execute(int arr2[4][9]){
 	arr1[3][4]=arr1[3][5];
 	arr1[3][8]=arr1[3][7];
 	}
-	if (stop_for_ip(arr1))
+	if (stop_for_ip(arr1))						// if desired config is reached, return solution.
 	{
 		return solution;
 	}
-	//cout << tips;
-
 	bfs(arr1);
 	return solution;
-	//cout<<"khatam" << endl;
 }
 int sol_length()
 {
