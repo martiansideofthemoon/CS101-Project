@@ -46,15 +46,17 @@ else
                         menu
                 else
                         if [ $choice -eq 4 ] ; then
-                        	subl readme.txt
+                        	gedit readme.txt
                         	menu
                         else
                         	if [ $choice -eq 5 ] ; then
+                                chmod +x setup.sh
                         		./setup.sh
                         		menu
                         	else
                         		if [ $choice -eq 6 ] ; then
-                        			./setup_allegro.sh
+                        			chmod +x setup_allegro.sh
+                                    ./setup_allegro.sh
                         			menu
                         		else 
                         			if [ $choice -eq 7 ] ; then

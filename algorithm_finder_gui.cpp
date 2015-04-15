@@ -107,6 +107,8 @@ int main(int argc, char **argv){
          redraw = true;
       }
       else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+         output_pyraminx_state();
+         flag=true;
          break;
       }
       else if (ev.type==ALLEGRO_EVENT_MOUSE_BUTTON_UP)

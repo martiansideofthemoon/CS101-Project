@@ -1,0 +1,12 @@
+Pyraminx.. The Untold Story
+
+Setting up the Utility
+You will need to install Allegro in order to run this utility. To install Allegro, you can run the file setup_allegro.sh
+Navigate to this directory in the Terminal and type "chmod +x setup_allegro.sh" to make it an executable file.
+Run the setup file by typing "./setup_allegro.sh"
+Alternatively, you could follow a detailed guide here : 
+Once setup, run ./setup.sh to compile all files. It should be made an executable as well by running "chmod +x setup.sh"
+
+Alternatively, you could fire ./menu.sh and select options 6 and 5 in that order. Make sure menu.sh is an executable. Run "chmod +x menu.sh" to do the same.
+
+Running 

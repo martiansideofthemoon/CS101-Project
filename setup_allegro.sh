@@ -1,3 +1,4 @@
+cd ~
 echo "Setting up allegro..."
 sudo apt-get update
 sudo apt-get install build-essential git cmake cmake-curses-gui xorg-dev libgl1-mesa-dev libglu-dev
