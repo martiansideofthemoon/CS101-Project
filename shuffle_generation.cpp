@@ -15,9 +15,10 @@ char dir_b[2][10] ={"u ","u' "};
 
 //char display[15][10];
 int display[15];
-void scramble(int*display, int k)
+void scramble(int*display, int k) //Execute the bigger eight moves on Pyraminx
 {
-  int y=((int)(rand()%8));
+  int y=((int)(rand()%8)); //Choose among 8 numbers
+  //Ensure that the two consecutive moves aren't same or complementary
     if(y%2==0)
      z=y+1;
      else
@@ -40,18 +41,18 @@ void scramble(int*display, int k)
 
 int* final_display()
 {
-  srand(static_cast<unsigned int>(time(0)));
+  srand(static_cast<unsigned int>(time(0))); //Random seed
   for(i=0;i<11;i++)
   scramble(display, i);
   //return display;
 
- display[11]=8+(int)rand()%2;
+ display[11]=8+(int)rand()%2; // For u or u'
 
-  display[12]=10+(int)rand()%2;
+  display[12]=10+(int)rand()%2; // For l or l'
 
-  display[13]=12+(int)rand()%2;
+  display[13]=12+(int)rand()%2; // For r or r'
 
-  display[14]=14+(int)rand()%2;
+  display[14]=14+(int)rand()%2; // For b or b'
   return display;
 }
 //cout<<" "<<display;

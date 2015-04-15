@@ -7,7 +7,10 @@
 #include <stdio.h>
 #include <math.h>
 #include "shuffle_generation.cpp"
-
+/*
+As code is similar to code in files algorithm_finder_gui.cpp and solution_display.cpp, we will not repeat all comments
+Comments only on new parts.
+*/
 using namespace std;
 int colors[4][3]={{0,0,255},{255,0,0},{0,255,0},{255,255,0}};
 int sticker_colors[4][9]= {{0,0,0,0,0,0,0,0,0},
@@ -111,7 +114,7 @@ int main(int argc, char **argv){
          {
             if (sqrt((mouse_x-centre[i][0])*(mouse_x-centre[i][0])+(mouse_y-centre[i][1])*(mouse_y-centre[i][1]))<radius)
             {
-               move_execute(i);
+               move_execute(i); //Execute move depending on i
                break;
             }
          }
@@ -196,7 +199,7 @@ void draw_pyraminx_face(int type,int face)
             draw_pyraminx_sticker(x,y,sticker_colors[face][lower_sticker_order[i]],1,type);
          }  
 }
-void shuffle()
+void shuffle() //Shuffle the pyraminx based on disp
 {
    disp=final_display();
    for (int i=0;i<15;i++)

@@ -13,42 +13,46 @@ int colors[6][3]={{0,0,255},{255,0,0},{0,255,0},{255,255,0},{255,255,255},{255,1
 int sticker_colors[4][9]= {{0,0,0,0,0,0,0,0,0},
                            {1,1,1,1,1,1,1,1,1},
                            {2,2,2,2,2,2,2,2,2},
-                           {3,3,3,3,3,3,3,3,3}};
+                           {3,3,3,3,3,3,3,3,3}}; // Sticker array
 int sticker_displayed[4][9]= {{5,0,0,0,0,0,0,0,0},
                            {1,1,1,1,1,1,1,1,1},
                            {2,2,2,2,2,2,2,2,2},
-                           {3,3,3,3,3,3,3,3,3}};
+                           {3,3,3,3,3,3,3,3,3}}; //Stickers displayed. Made to account for pink color
 int active_coordinates[2]={0,0};
+// string of moves to convert numbers into letters to show solution on the display
 string moves[16]={"U ", "U' ", "L ", "L' ","R ", "R' ", "B ","B' ","u ","u' ","l ","l' ","r ","r' ","b ","b' "};
 string button_text[8]={"Blue","Red","Green","Yellow","White","Left","Right","Done"};
 string move_sequence="";
-int colorid=0;
-int *disp;
+int colorid=0; // Color sticker
+int *disp; 
 const int screen_Width=1000;
 const int screen_Height=1000;
-int centre[8][2]={{100,550},{200,550},{300,550},{400,550},{500,550},{600,550},{700,550},{800,550}};
-int x_origin=500;
-int radius=25;
-int font_size=12;
+int centre[8][2]={{100,550},{200,550},{300,550},{400,550},{500,550},{600,550},{700,550},{800,550}}; // Button coordinates
+int x_origin=500; //Origin for drawing
+int radius=25; //Radius of button
+int font_size=12; 
 int start_x_origin=500;
 int num_buttons=8;
 int y_origin=0;
 int start_y_origin=0;
-int scale_coordinate_to_pixel=100;
-double relative_coordinates_upper[6][2]={{0,0},{1,1},{-1,1},{2,2},{0,2},{-2,2}};
-double relative_coordinates_lower[3][2]={{0,2},{1,3},{-1,3}};
-double offset=0.08;
-double length=1;
+int scale_coordinate_to_pixel=100; //Scale factor
+double relative_coordinates_upper[6][2]={{0,0},{1,1},{-1,1},{2,2},{0,2},{-2,2}}; //for upper stickers of a face
+double relative_coordinates_lower[3][2]={{0,2},{1,3},{-1,3}}; //for lower stickers of a face
+double offset=0.08;                                                              // Offset is half of the distance between
+                                                                                 // the two pieces of a face of the pyraminx
+                                                                                 // It basically helps create the black 
+                                                                                 // space between pieces.
+double length=1; //Coordinate length of sticker
 
-const float FPS = 10;
+const float FPS = 10; //Frames per second
 bool flag=true;
 void draw_pyraminx_sticker(double, double, int, int, int);
 void draw_pyraminx_face(int type,int face);
-void output_pyraminx_state();
+void output_pyraminx_state(); //Write to file
 void draw_buttons();
 void draw_button_labels();
-void increment_active_coordinate();
-void decrement_active_coordinate();
+void increment_active_coordinate(); //Go ahead in stickers
+void decrement_active_coordinate(); //GO behind in stickers
 void move_execute(int moveid);
 int main(int argc, char **argv){
    
@@ -74,9 +78,9 @@ int main(int argc, char **argv){
       al_destroy_timer(timer);
       return -1;
    }
-   al_init_font_addon();
+   al_init_font_addon(); // initialize font addons 
    //al_init_ttf_addon(); 
-   al_install_mouse();
+   al_install_mouse(); // // initialize mouse
    event_queue = al_create_event_queue();
    if(!event_queue) {
       fprintf(stderr, "failed to create event_queue!\n");
@@ -84,14 +88,15 @@ int main(int argc, char **argv){
       al_destroy_timer(timer);
       return -1;
    }
- 
+   // register the display,timer and mouse events in the event queue.
    al_register_event_source(event_queue, al_get_display_event_source(display));
    
    al_register_event_source(event_queue, al_get_timer_event_source(timer));
    al_register_event_source(event_queue, al_get_mouse_event_source());
  
-   al_clear_to_color(al_map_rgb(0,0,0));
- 
+   al_clear_to_color(al_map_rgb(0,0,0)); // makes screen black
+   // allegro works with two screens one behind the other it makes changes in the back screen hence
+   // flip display is used to show the changes that have occured since it flips and shows the back screen
    al_flip_display();
  
    al_start_timer(timer);
@@ -104,10 +109,10 @@ int main(int argc, char **argv){
  
       if(ev.type == ALLEGRO_EVENT_TIMER) {
          
-         redraw = true;
+         redraw = true; //Draw screen every time this function is called. FPS concept
       }
       else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-         output_pyraminx_state();
+         output_pyraminx_state(); //write to file
          flag=true;
          break;
       }
@@ -117,14 +122,14 @@ int main(int argc, char **argv){
          int mouse_y=ev.mouse.y;
          bool flag=false;
          for (int i=0;i<num_buttons;i++)
-         {
+         { //Check which button was pressed
             if (sqrt((mouse_x-centre[i][0])*(mouse_x-centre[i][0])+(mouse_y-centre[i][1])*(mouse_y-centre[i][1]))<radius)
             {
                if (i<=4)
                {
-                  sticker_colors[active_coordinates[0]][active_coordinates[1]]=i;
+                  sticker_colors[active_coordinates[0]][active_coordinates[1]]=i; //Put corresponding color in arrays
                   sticker_displayed[active_coordinates[0]][active_coordinates[1]]=i;
-                  increment_active_coordinate();
+                  increment_active_coordinate(); //Move pink sticker forward
                }
                else if (i==5)
                {
@@ -136,7 +141,7 @@ int main(int argc, char **argv){
                }
                else if (i==7)
                {
-                  output_pyraminx_state();
+                  output_pyraminx_state(); //Write to file
                   flag=true;
                }
             }
@@ -151,7 +156,7 @@ int main(int argc, char **argv){
          draw_buttons();
          draw_button_labels();
          draw_pyraminx_face(1,0);
-         x_origin+=length*3*scale_coordinate_to_pixel;
+         x_origin+=length*3*scale_coordinate_to_pixel; //Move origin
          draw_pyraminx_face(1,1);
          x_origin-=2*length*3*scale_coordinate_to_pixel;
          draw_pyraminx_face(1,2);
@@ -183,10 +188,11 @@ int main(int argc, char **argv){
 }
 void draw_pyraminx_face(int type,int face)
 {
+   //Using coordinate geometry to draw pyraminx face
    int upper_sticker_order[6];
    int lower_sticker_order[3];
    if (face!=3)
-   {
+   { //Changing order to match data order
    upper_sticker_order[0]=0;
    upper_sticker_order[1]=3;
    upper_sticker_order[2]=1;
@@ -290,7 +296,7 @@ void draw_buttons()
 void draw_button_labels()
 {
          al_init_ttf_addon(); 
-         ALLEGRO_FONT *font = al_load_ttf_font("Ubuntu-B.ttf",font_size,0 );
+         ALLEGRO_FONT *font = al_load_ttf_font("Ubuntu-B.ttf",font_size,0 ); //Load this font
          for (int i=0;i<num_buttons;i++)
          {
             al_draw_textf(font,al_map_rgb(255,255,255),centre[i][0]+2,centre[i][1]-10, ALLEGRO_ALIGN_CENTRE,"%s",&button_text[i][0]);
@@ -299,12 +305,12 @@ void draw_button_labels()
 }
 void increment_active_coordinate()
 {
-   int face=active_coordinates[0];
-   int sticker=active_coordinates[1];
+   int face=active_coordinates[0]; //Face number of pink
+   int sticker=active_coordinates[1]; //Sticker number of pink
    sticker++;
    if (sticker>=9)
    {
-      sticker=0;
+      sticker=0; 
       face++;
    }
    if (face>=4)
