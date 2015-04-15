@@ -11,7 +11,7 @@ Alternatively, you could fire ./menu.sh and select options 6 and 5 in that order
 
 Running the standard modes :
 
-Simply type "./menu.sh" (It should be an executable, done with the step mentioned above. A menu bar pops up. Here we can select the mode we wish to use. Further operation details are mentioned on the screen. Make sure you close Allegro Windows after you are done. While solutions are being computed, please be patient and wait upto 15-20 seconds. On an average, it would take 4-6 seconds. For some cases, or unsolvable states, it would take upto 15-20 seconds.
+Simply type "./menu.sh" (It should be an executable, done with the step mentioned above.) A menu bar pops up. Here we can select the mode we wish to use. Further operation details are mentioned on the screen. Make sure you close Allegro Windows after you are done. While solutions are being computed, please be patient and wait upto 15-20 seconds. On an average, it would take 4-6 seconds. For some cases, or unsolvable states, it would take upto 15-20 seconds.
 
 Mode 1 :- This mode runs via the Android app provided along with this utility. Use the IP address mentioned in the Android app and select port 6066. While clicking photographs, make sure the Pyraminx face points upwards. Press Send after clicking the picture. Make sure all stickers have been detected. Detected stickers are surrounded by black lines. After clicking the first picture, go to the face on the RIGHT of the start face. After this face, turn the cube again, to see the face LEFT of the start face.
 For the last face, the bottom right corner with respect to the start face should point upwards.
@@ -29,7 +29,7 @@ Mode 6 :- Setup up Allegro directly.
 
 Mode 7 :- Exit
 
-Executable files and how to use them :-
+Executable and Text files and how to use them :-
 Symbols used in this project :-
 0,1,2,3,4 represent Blue, Red, Green, Yellow and White in sticker colour files like test.txt
 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 represent U, U', L, L', R, R', B, B', u, u', l, l', r, r', b, b' moves with respect to start face as in files Analysis.txt, solved_moves.txt
@@ -42,5 +42,42 @@ analysis : This file reads Analysis.txt and produces an analysis for this shuffl
 
 Analysis.txt : The first line represents the shuffle move symbols using the numbers mentioned above. The second line is the user's attempt.
 
+bugs.txt : List of bugs reported with their status.
 
+camera : The android app.
 
+GreetingServer.class : The Java server which will receive input and write it to test.txt
+
+image_processed_cube_solver : A terminal utility which reads test.txt and generates the solution. It writes the solution to solved_moves.txt
+
+menu.sh : The bash script which opens the menu.
+
+pyraminx_shuffler : An Allegro GUI which is used to shuffle the pyraminx, and allow the user to solve the pyraminx. It writes the shuffle sequence and user's attempt to Analysis.txt
+
+pyraminix_solver : An old executable not used by menu.sh. It simply reads test.txt and prints the shortest solution.
+
+readme.txt : THIS FILE
+
+setup_allegro.sh : A bash script to automatically install allegro
+
+setup.sh : A bash script to automatically compile all files and magically lubricate the Pyraminx.
+
+shuffler : An old executable which isn't used. Old version of pyraminx_shuffler
+
+solution_display : An Allegro GUI which reads solved_moves.txt and displays the solution using arrows.
+
+solved_moves.txt : A shortest solution, written by various files and read by solution_display
+
+TEST FILES : All our experiments :D
+
+test.txt : Holds sticker colours. One face per line, nine numbers for nine stickers
+
+WORK DIVISION CS101.txt : A memorable and fun journey..
+
+Developed by :-
+Kalpesh Krishna
+Karan Chadha
+Roshan Nayak
+Harita Parmar
+
+IIT Bombay....ofcourse. B)
