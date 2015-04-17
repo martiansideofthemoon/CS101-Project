@@ -13,9 +13,10 @@ Running the standard modes :
 
 Simply type "./menu.sh" (It should be an executable, done with the step mentioned above.) A menu bar pops up. Here we can select the mode we wish to use. Further operation details are mentioned on the screen. Make sure you close Allegro Windows after you are done. While solutions are being computed, please be patient and wait upto 15-20 seconds. On an average, it would take 4-6 seconds. For some cases, or unsolvable states, it would take upto 15-20 seconds.
 
-Mode 1 :- This mode runs via the Android app provided along with this utility. Use the IP address mentioned in the Android app and select port 6066. While clicking photographs, make sure the Pyraminx face points upwards. Press Send after clicking the picture. Make sure all stickers have been detected. Detected stickers are surrounded by black lines. After clicking the first picture, go to the face on the RIGHT of the start face. After this face, turn the cube again, to see the face LEFT of the start face.
+Mode 1 :- This mode runs via the Android app provided along with this utility. Make sure that the Android app and the PC have been connected via the same WiFi router or via WiFi Hotspot. Use the IP address mentioned in the Android app and select port 6066. While clicking photographs, make sure the Pyraminx face points upwards. Press Send after clicking the picture. Make sure all stickers have been detected. Detected stickers are surrounded by black lines. After clicking the first picture, go to the face on the RIGHT of the start face. After this face, turn the cube again, to see the face LEFT of the start face.
 For the last face, the bottom right corner with respect to the start face should point upwards.
 The rest of the steps have been automated.
+For best results, try not to let light bounce off the stickers. They are covered with a glossy plastic film. Also use a black based Pyraminx. Also the stickers should not be too dark in the image.
 
 Mode 2 :- Use the interface to attempt solving the Pyraminx. You may also use the shuffling algorithm mentioned and solve it on your Pyraminx. Make sure you record your solution on the GUI. Close the window to see a detailed analysis on your solution.
 
