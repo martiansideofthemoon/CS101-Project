@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.1
+Name=Pyraminx..The Untold Story
+Comment=This is my comment
+Exec=/home/kalpesh/CS101\ Project/menu.sh
+Icon=/home/kalpesh/CS101\ Project/icon.png
+Terminal=true
+Type=Application
+Categories=Utility;Application;

@@ -1,5 +1,5 @@
 #!/bin/bash
- 
+
 # Declare variable choice and assign value 4
 choice=0
 # Print to stdout
