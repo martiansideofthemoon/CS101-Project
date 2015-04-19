@@ -5,6 +5,7 @@ using namespace std;
 
 #define SIZE 1000000
 
+/* the node class specifies all parameters needed to be specified for a node in both the bfs graph and the BST*/
 class node{
 public:
     int key[4][9];
@@ -46,26 +47,20 @@ int nodecounter=1,currnodes_counter=1;
 
 string shortest_path[]={"U","U'","L","L'","R","R'","B","B'"};
 void shortest_sol(int q);
-void fill_array(){
-	for (int i = 0; i < 4; ++i)
-	{
-		for(int j=0;j<9;j++)
-		{
-			cin>>desired[i][j];
-		}
-	}
-	return;
-}
 
 void height(node* h);
 
 void fix_insert(node* s);
 
 void height(node* h){
+	/* It is used to find the hieght of the node(input parameter) in the BST*/
+
 	h->height=max(h->left_child->height,h->right_child->height)+1;	// this is obvious.
 }
 
 void left_rotate(node* a){
+	/* The left rotate function performs the left rotate operation on a node(input parameter) and is used to make the tree balanced*/
+
 	node* b;
 	b=a->right_child;
 	a->right_child=b->left_child;
@@ -84,7 +79,9 @@ void left_rotate(node* a){
 }
 
 void right_rotate(node* m){
-	node*n;												// refer to the left rotate function .They are very symmyteric.
+	/*  The right rotate function performs the right rotate operation on a node(input parameter) and is used to make the tree balanced*/
+
+	node*n;												
 	n=m->left_child;
 	m->left_child=n->right_child;
 	if(n->right_child!=&null)
@@ -100,8 +97,11 @@ void right_rotate(node* m){
 	height(m);
 	height(n);
 }
+void fix_insert(node* s){		
 
-void fix_insert(node* s){				// the function makes the binar search trees balanced
+/* the fix insert function is used to make the BST balanced when a node (input parameter) is inserted in the tree
+	by peforming corresponding left rotate and right rotate operations*/
+
 node* q;
 q=s;
 int count=0;
@@ -146,8 +146,10 @@ while(!(q==&null))
 }
 
 int compare(int key1[4][9],int key2[4][9])
-{
-	// compares the keys such that when an inequality is encountered, it compares the two numbers and returns appropriate values.
+{	
+	/* compares the key arrays (input parameters) such that when an inequality is encountered, it compares
+	two numbers nd returns appropriate values which are further used in more functions. */
+
 	int var=1;
 	for(int i=0;i<4;i++)
 	{
@@ -163,8 +165,12 @@ int compare(int key1[4][9],int key2[4][9])
 	return var;
 }
 
+
 bool insert(int key[4][9],int level,int parent_index)
 {	
+	/* The insert function is used to insert a node in the BST and it calls the fix_insert function to
+	balance the tree. key, level and parent_index specify the parameters of the new node which is t be inserted*/
+
 	int comp;
 	node* y;
 	node* x;
@@ -214,7 +220,10 @@ bool insert(int key[4][9],int level,int parent_index)
 int adj[8][4][9];
 
 int adjacency(int ip[4][9])
-{
+{	
+	/* It stores the adjacency list of the BFS graph which shows all the configurations that can be reached from one configuration
+		ip is the configuratuion of which the adjacency list is found	*/
+
 	//int adj[8][4][9];
 
 	for (int i=0; i<8;i++)
@@ -350,7 +359,9 @@ int adjacency(int ip[4][9])
 }
 
 bool check(int arr1[4][9],int arr2[4][9])
-{	// checks whether the configuration has already been encountered or not.
+{	
+	// checks whether the configuration has already been encountered or not.
+	
 	bool flag=false;
 	for (int i = 0; i < 4; ++i)
 	{
@@ -369,6 +380,10 @@ bool check(int arr1[4][9],int arr2[4][9])
 }
 
 bool stop_for_ip(int arr[4][9]){
+
+	/* This function basically checks whether the mode is algo-finder or solver and 
+		makes appropriate changes to the desired configuration when the mode is the algorithm finder*/
+
 	if (isAlgoFinder==false)       // checks whether the mode is algo_finder.
 	{
 	bool flag=false;			   // checks whether the config reached is the solved one.
@@ -413,8 +428,10 @@ bool stop_for_ip(int arr[4][9]){
 
 
 
-void backtrack(node* x)			// bactracks from the desired config to the initial config.
-{
+void backtrack(node* x)			
+{	
+	// bactracks from the desired config to the initial config.
+
 	int i=0;
 	while(x->bfs_parent!=&null){
 		move_required[i]=x->v;
@@ -429,6 +446,9 @@ void backtrack(node* x)			// bactracks from the desired config to the initial co
 }
 
 void shortest_sol(int q){
+
+	/* Saves the shortest solution in a character array */
+
 	for (int i = q; i >=0; i--)
 	{
 		solution[solution_length]=move_required[i];
@@ -440,6 +460,10 @@ void shortest_sol(int q){
 
 void bfs(int ip[4][9])
 {
+	/* The BFS dunction is the most vital function which makes the Graph of all configurations 
+	   and finds the shortest solution between any two configurations by moving throughout 
+	   the graph using BST. ip is the input array which is the initial configuration */
+
 	int x=1,next_counter;
 	int arr1[4][9];						// x is to save that how many moves got u there
 	for(int i=0;i<4;i++)
@@ -518,6 +542,13 @@ void bfs(int ip[4][9])
 }
 
 int* execute(int arr2[4][9]){
+	
+	/* This function solves the tips of the pyraminx and calls the BFS function to start solving the 
+		other parts of the pyraminx other than the tips. her arr2 is the input which is the initial
+		configuration of the pyraminx. If the mode is algo-finder and any of the tips are colored white
+		it makes changes in the desird array so that the check function neglects the final color on those
+		white pieces */
+
 	int arr1[4][9];
 
 	for (int i=0;i<4;i++)
@@ -720,14 +751,17 @@ int* execute(int arr2[4][9]){
 }
 int sol_length()
 {
+	/* returns the solution length*/
 	return solution_length;
 }
 bool solution_found()
 {
+	/* Used to determine whwther the given configration is solvable*/
 	return isSolvable;
 }
 void algo_finder_config(int desired[4][9])
-{
+{	
+	/* It gives appropriate input to the desired array usung the algorithm finder graphics*/
 	isAlgoFinder=true;
 	for (int i=0;i<4;i++)
 	{

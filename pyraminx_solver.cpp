@@ -100,7 +100,7 @@ void right_rotate(node* m){
 void fix_insert(node* s){
 node* q;
 q=s;
-int count=0;
+int count=0;02+00/
 
 while(!(q==&null))
 {
