@@ -8,8 +8,14 @@ int solved_pyraminx[4][9]= {{0,0,0,0,0,0,0,0,0},
                            {2,2,2,2,2,2,2,2,2},
                            {3,3,3,3,3,3,3,3,3}}; //Sticker colours in a solved Pyraminx
 string moves[16]={"U ", "U' ", "L ", "L' ","R ", "R' ", "B ","B' ","u ","u' ","l ","l' ","r ","r' ","b ","b' "}; //Sequence of moves
+
 int main()
 {
+	/*
+The main function reads test.txt and stores the data in sticker_colors.
+It then uses the functions in pyraminx_solver_functions.cpp to generate the shortest solution. 
+The shortest solution is then printed and stored in solved_moves.txt
+*/
 	//The code below is used to read text.txt
 	int number_characters=0;
 	while (number_characters<40) //Check valid length of file. Loop exits when file has atleast 40 characters

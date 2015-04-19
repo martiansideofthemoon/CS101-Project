@@ -7,6 +7,11 @@ int sticker_colors[4][9]; //Pyraminx array
 string moves[16]={"U ", "U' ", "L ", "L' ","R ", "R' ", "B ","B' ","u ","u' ","l ","l' ","r ","r' ","b ","b' "};
 int main()
 {
+    /*
+The main function reads test.txt and stores the data in sticker_colors.
+It then uses the functions in pyraminx_solver_functions.cpp to generate the shortest solution. 
+The shortest solution is then printed and stored in solved_moves.txt
+*/
     //Code to receive test.txt Explained in algorithm_finder.cpp
 	int number_characters=0;
 	while (number_characters<40)

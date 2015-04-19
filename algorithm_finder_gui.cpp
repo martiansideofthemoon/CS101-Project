@@ -46,16 +46,23 @@ double length=1; //Coordinate length of sticker
 
 const float FPS = 10; //Frames per second
 bool flag=true;
-void draw_pyraminx_sticker(double, double, int, int, int);
+
+void draw_pyraminx_sticker(double x,double y,int colorid,int type,int facetype);
+
 void draw_pyraminx_face(int type,int face);
-void output_pyraminx_state(); //Write to file
+
+void output_pyraminx_state(); 
 void draw_buttons();
 void draw_button_labels();
 void increment_active_coordinate(); //Go ahead in stickers
 void decrement_active_coordinate(); //GO behind in stickers
 void move_execute(int moveid);
+
 int main(int argc, char **argv){
-   
+   /*
+The main function operates by initializing the allegro variables.
+The while(1) helps record events and then draws the various graphical elements as per the time event.
+*/
    ALLEGRO_DISPLAY *display = NULL;
    ALLEGRO_EVENT_QUEUE *event_queue = NULL;
    ALLEGRO_TIMER *timer = NULL;
@@ -188,6 +195,11 @@ int main(int argc, char **argv){
 }
 void draw_pyraminx_face(int type,int face)
 {
+   /*
+draws each face of pyraminx
+type is facetype, 1 for first three faces, -1 for last face
+face is face number
+*/
    //Using coordinate geometry to draw pyraminx face
    int upper_sticker_order[6];
    int lower_sticker_order[3];
@@ -231,6 +243,14 @@ void draw_pyraminx_face(int type,int face)
 
 void draw_pyraminx_sticker(double x,double y,int colorid,int type,int facetype)
 {
+   /*
+Draws the sticker of the pyraminx using coordinate geometry. Its parameters are 
+x --> relative x coordinate of the sticker position
+y --> relative y coordinate of the sticker position
+colorid --> color to be drawn using the standard scheme (blue is 0, red is 1, green is 2, yellow is 3, white is 4, pink is 5)
+type --> upward pointing or downward pointing are 1 and -1 respectively
+facetype --> first three faces are type 1, fourth face is type -1
+*/
             if(type==0)
             {
             x=x*0.5*length;
@@ -274,6 +294,9 @@ void draw_pyraminx_sticker(double x,double y,int colorid,int type,int facetype)
 }
 void output_pyraminx_state()
 {
+   /*
+Write to file test.txt
+*/
    //move_execute(16);
    ofstream ofile("test.txt");
    for (int i=0;i<4;i++)
@@ -287,7 +310,10 @@ void output_pyraminx_state()
    ofile.close();
 }
 void draw_buttons()
-{
+{ 
+   /*
+   Draw all the buttons on the screen
+   */
    for (int i=0;i<num_buttons;i++)
    {
       al_draw_filled_circle(centre[i][0], centre[i][1], radius, al_map_rgb(255,0,0));
@@ -295,6 +321,9 @@ void draw_buttons()
 }
 void draw_button_labels()
 {
+   /*
+   Draw all the button stickers centered in the buttons
+   */
          al_init_ttf_addon(); 
          ALLEGRO_FONT *font = al_load_ttf_font("Ubuntu-B.ttf",font_size,0 ); //Load this font
          for (int i=0;i<num_buttons;i++)
@@ -305,6 +334,9 @@ void draw_button_labels()
 }
 void increment_active_coordinate()
 {
+   /*
+   Move the pink sticker one ahead
+   */
    int face=active_coordinates[0]; //Face number of pink
    int sticker=active_coordinates[1]; //Sticker number of pink
    sticker++;
@@ -325,6 +357,9 @@ void increment_active_coordinate()
 }
 void decrement_active_coordinate()
 {
+   /*
+   Move the pink sticker one behind
+   */
    int face=active_coordinates[0];
    int sticker=active_coordinates[1];
    sticker--;

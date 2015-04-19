@@ -16,6 +16,11 @@ void adjacency1(int ip[4][9],int adj[16][4][9]); // Prototype to generate adjace
 void execute_move(int); // Run the desired move
 int main()
 {
+  /*
+The main function reads Analysis.txt and stores the data in attempt_sequence.
+It then uses the functions in pyraminx_solver_functions.cpp to generate the shortest solutions after each move. 
+The shortest solution is then printed.
+*/
 	ifstream ifile("Analysis.txt");
 	cout << "Your shuffling algorithm was ";
 	for (int i=0;i<15;i++)
@@ -90,6 +95,9 @@ int main()
 
 void execute_move(int moveid)
 {
+  /*
+  Perform the moveid numbered move on the sticker_colors array. Moveids mentioned in readme and documentation
+  */
 	int adj[16][4][9];
       adjacency1(sticker_colors,adj); //Generate an array of all possible states achievable after executing one move on array
       for (int a=0;a<4;a++)
@@ -101,7 +109,11 @@ void execute_move(int moveid)
 void adjacency1(int ip[4][9],int adj[16][4][9])
 {
   //int adj[8][4][9];
-
+  /*
+  Generate the adjacency list, which is a list of all the states achievable by performing one move on the pyraminx
+  ip -- > start state
+  adj -- > array to write adjacency to
+  */
   for (int i=0; i<16;i++)
   {
     for(int j=0;j<4;j++)

@@ -3,16 +3,25 @@ import java.io.*;
 
 public class GreetingServer extends Thread
 {
+   /*
+   This class uses a Thread in order to accept data from the android app.It makes use of Sockets
+   */
    private ServerSocket serverSocket;
    String stickercolors="";
    public GreetingServer(int port) throws IOException
    {
+      /*
+      Constructor called to initialize variables
+      */
       serverSocket = new ServerSocket(port);
       serverSocket.setSoTimeout(1000000);
    }
 
    public void run()
    {
+      /*
+      This function receives data, writes it to test.txt and closes the server on completion.
+      */
       while(true)
       {
          try

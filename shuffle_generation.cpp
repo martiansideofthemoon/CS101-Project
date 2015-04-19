@@ -17,6 +17,10 @@ char dir_b[2][10] ={"u ","u' "};
 int display[15];
 void scramble(int*display, int k) //Execute the bigger eight moves on Pyraminx
 {
+  /*
+  This function is used to generate a random sequence. It uses the rand function to implement the same.
+  Move ids are stored in display array
+  */
   int y=((int)(rand()%8)); //Choose among 8 numbers
   //Ensure that the two consecutive moves aren't same or complementary
     if(y%2==0)
@@ -41,6 +45,9 @@ void scramble(int*display, int k) //Execute the bigger eight moves on Pyraminx
 
 int* final_display()
 {
+  /*
+  Initialize random seed, run scramble, shuffle tips and output the random sequence.
+  */
   srand(static_cast<unsigned int>(time(0))); //Random seed
   for(i=0;i<11;i++)
   scramble(display, i);
@@ -68,6 +75,10 @@ void scramble_pyraminx()
 
 void adjacency(int ip[4][9],int adj[16][4][9])
 {
+  /*
+  The BFS adjacency list is generated here. The parameters are the initial state and the array to write to.
+  adjacency list is the set of all achievable configurations starting from ip in one move
+  */
   //int adj[8][4][9];
 
   for (int i=0; i<16;i++)
