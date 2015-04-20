@@ -1,5 +1,8 @@
 Pyraminx.. The Untold Story
-
+/////
+You can see a video demonstrating its setup and working here :
+https://www.youtube.com/watch?v=EBYpmsQXVZQ&feature=youtu.be
+/////
 Setting up the Utility
 You will need to install Allegro in order to run this utility. To install Allegro, you can run the file setup_allegro.sh
 Navigate to this directory in the Terminal and type "chmod +x setup_allegro.sh" to make it an executable file.
