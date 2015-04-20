@@ -8,9 +8,9 @@ Common
 !!! SRS -- DONE
 !! Decide the exact design of GUI of app/computer application -- DONE
 !! Integration of project -- DONE (using bash)
-!!! Debug all codes to perfection
-!!! Documentation
-!!! Readme file
+!!! Debug all codes to perfection -- DONE
+!!! Documentation -- DONE
+!!! Readme file -- DONE
 
 
 Kalpesh
@@ -37,16 +37,16 @@ Karan
 
 Harita
 !! Pyraminx shuffling algorithm -- DONE
-!!! Knowledge of BFS/BST/AVL
+!!! Knowledge of BFS/BST/AVL -- DITCH
 !!! Algorithm to solve tips of Pyraminx -- DONE
 !! Designing Working Menu Bar -- DONE
 !! Interface for Mode 3 (cube solver) -- DONE
-!!! Presentation
+!!! Presentation -- DONE
 
 Roshan
-!!! Knowledge of BFS/BST/AVL
+!!! Knowledge of BFS/BST/AVL -- DITCH :P
 !!! Algorithm to determine fourth side of Pyraminx from matrix -- CANCELLED
 !!! Interface for Mode 1 (Displaying image processed solution) -- DONE
 !! Interface for Mode 2 (Algorithm finder) -- DONE
 !! Interface for Mode 3 analysis -- DONE
-!!! Video of working
+!!! Video of working -- DONE
